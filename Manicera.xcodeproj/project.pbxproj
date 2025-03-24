@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		71856F9E2D8458110098D315 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71856F9D2D8458110098D315 /* CloudKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		71856F7F2D8456E20098D315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71856F622D8456E10098D315 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71856F692D8456E10098D315;
+			remoteInfo = Manicera;
+		};
+		71856F892D8456E20098D315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71856F622D8456E10098D315 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71856F692D8456E10098D315;
+			remoteInfo = Manicera;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		71856F6A2D8456E10098D315 /* Manicera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manicera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		71856F7E2D8456E20098D315 /* ManiceraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManiceraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		71856F882D8456E20098D315 /* ManiceraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManiceraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		71856F9D2D8458110098D315 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		710962BC2D8487E40014CA87 /* Exceptions for "Manicera" folder in "Manicera" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 71856F692D8456E10098D315 /* Manicera */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		71856F6C2D8456E10098D315 /* Manicera */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				710962BC2D8487E40014CA87 /* Exceptions for "Manicera" folder in "Manicera" target */,
+			);
+			path = Manicera;
+			sourceTree = "<group>";
+		};
+		71856F812D8456E20098D315 /* ManiceraTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ManiceraTests;
+			sourceTree = "<group>";
+		};
+		71856F8B2D8456E20098D315 /* ManiceraUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ManiceraUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		71856F672D8456E10098D315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71856F9E2D8458110098D315 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F7B2D8456E20098D315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F852D8456E20098D315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		71856F612D8456E10098D315 = {
+			isa = PBXGroup;
+			children = (
+				71856F6C2D8456E10098D315 /* Manicera */,
+				71856F812D8456E20098D315 /* ManiceraTests */,
+				71856F8B2D8456E20098D315 /* ManiceraUITests */,
+				71856F9C2D8458110098D315 /* Frameworks */,
+				71856F6B2D8456E10098D315 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		71856F6B2D8456E10098D315 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71856F6A2D8456E10098D315 /* Manicera.app */,
+				71856F7E2D8456E20098D315 /* ManiceraTests.xctest */,
+				71856F882D8456E20098D315 /* ManiceraUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		71856F9C2D8458110098D315 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71856F9D2D8458110098D315 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		71856F692D8456E10098D315 /* Manicera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71856F912D8456E20098D315 /* Build configuration list for PBXNativeTarget "Manicera" */;
+			buildPhases = (
+				71856F662D8456E10098D315 /* Sources */,
+				71856F672D8456E10098D315 /* Frameworks */,
+				71856F682D8456E10098D315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				71856F6C2D8456E10098D315 /* Manicera */,
+			);
+			name = Manicera;
+			packageProductDependencies = (
+			);
+			productName = Manicera;
+			productReference = 71856F6A2D8456E10098D315 /* Manicera.app */;
+			productType = "com.apple.product-type.application";
+		};
+		71856F7D2D8456E20098D315 /* ManiceraTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71856F962D8456E20098D315 /* Build configuration list for PBXNativeTarget "ManiceraTests" */;
+			buildPhases = (
+				71856F7A2D8456E20098D315 /* Sources */,
+				71856F7B2D8456E20098D315 /* Frameworks */,
+				71856F7C2D8456E20098D315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71856F802D8456E20098D315 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				71856F812D8456E20098D315 /* ManiceraTests */,
+			);
+			name = ManiceraTests;
+			packageProductDependencies = (
+			);
+			productName = ManiceraTests;
+			productReference = 71856F7E2D8456E20098D315 /* ManiceraTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		71856F872D8456E20098D315 /* ManiceraUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71856F992D8456E20098D315 /* Build configuration list for PBXNativeTarget "ManiceraUITests" */;
+			buildPhases = (
+				71856F842D8456E20098D315 /* Sources */,
+				71856F852D8456E20098D315 /* Frameworks */,
+				71856F862D8456E20098D315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71856F8A2D8456E20098D315 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				71856F8B2D8456E20098D315 /* ManiceraUITests */,
+			);
+			name = ManiceraUITests;
+			packageProductDependencies = (
+			);
+			productName = ManiceraUITests;
+			productReference = 71856F882D8456E20098D315 /* ManiceraUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		71856F622D8456E10098D315 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					71856F692D8456E10098D315 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					71856F7D2D8456E20098D315 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 71856F692D8456E10098D315;
+					};
+					71856F872D8456E20098D315 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 71856F692D8456E10098D315;
+					};
+				};
+			};
+			buildConfigurationList = 71856F652D8456E10098D315 /* Build configuration list for PBXProject "Manicera" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				fr,
+				"es-419",
+				"pt-PT",
+				tr,
+			);
+			mainGroup = 71856F612D8456E10098D315;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 71856F6B2D8456E10098D315 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71856F692D8456E10098D315 /* Manicera */,
+				71856F7D2D8456E20098D315 /* ManiceraTests */,
+				71856F872D8456E20098D315 /* ManiceraUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		71856F682D8456E10098D315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F7C2D8456E20098D315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F862D8456E20098D315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		71856F662D8456E10098D315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F7A2D8456E20098D315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71856F842D8456E20098D315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		71856F802D8456E20098D315 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71856F692D8456E10098D315 /* Manicera */;
+			targetProxy = 71856F7F2D8456E20098D315 /* PBXContainerItemProxy */;
+		};
+		71856F8A2D8456E20098D315 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71856F692D8456E10098D315 /* Manicera */;
+			targetProxy = 71856F892D8456E20098D315 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		71856F922D8456E20098D315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Manicera/Manicera.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Manicera/Preview Content\"";
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Manicera/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Billares-Boedo.Manicera";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		71856F932D8456E20098D315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Manicera/Manicera.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Manicera/Preview Content\"";
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Manicera/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Billares-Boedo.Manicera";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		71856F942D8456E20098D315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		71856F952D8456E20098D315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		71856F972D8456E20098D315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreotti.alejandro.ManiceraTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manicera.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manicera";
+			};
+			name = Debug;
+		};
+		71856F982D8456E20098D315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreotti.alejandro.ManiceraTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Manicera.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Manicera";
+			};
+			name = Release;
+		};
+		71856F9A2D8456E20098D315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreotti.alejandro.ManiceraUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Manicera;
+			};
+			name = Debug;
+		};
+		71856F9B2D8456E20098D315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87GRH8J2ST;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreotti.alejandro.ManiceraUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Manicera;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		71856F652D8456E10098D315 /* Build configuration list for PBXProject "Manicera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71856F942D8456E20098D315 /* Debug */,
+				71856F952D8456E20098D315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		71856F912D8456E20098D315 /* Build configuration list for PBXNativeTarget "Manicera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71856F922D8456E20098D315 /* Debug */,
+				71856F932D8456E20098D315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		71856F962D8456E20098D315 /* Build configuration list for PBXNativeTarget "ManiceraTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71856F972D8456E20098D315 /* Debug */,
+				71856F982D8456E20098D315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		71856F992D8456E20098D315 /* Build configuration list for PBXNativeTarget "ManiceraUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71856F9A2D8456E20098D315 /* Debug */,
+				71856F9B2D8456E20098D315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 71856F622D8456E10098D315 /* Project object */;
+}
