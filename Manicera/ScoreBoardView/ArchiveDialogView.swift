@@ -17,7 +17,6 @@ struct ArchiveDialogView: View {
     
     @FocusState var focus: FocusableField?
     @Environment(\.modelContext) var modelContext
-    //@Query var stats: [PlayerStats]
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
@@ -261,7 +260,6 @@ struct ArchiveDialogView: View {
     } //fetch individual player stats function
     
     func setNewPlayerStats(playerName: String, playerRuns: [Int], otherPlayerRuns: [Int], self: Bool){
-        
         let innings = self ? playerRuns.count + otherPlayerRuns.count : playerRuns.count
         let wins =  ( (playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +))  && !self ) ? 1 : 0 // player can't get win vs. self
         let losses = ( (playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +))  && !self ) ? 1 : 0
@@ -290,19 +288,13 @@ struct ArchiveDialogView: View {
     }
     
     func setOrUpdatePlayerStats(playerStats: [PlayerStats], playerName: String, playerRuns: [Int], otherPlayerRuns: [Int]) {
-        if playerStats.isEmpty { //player not in database
-
-           //let newPlayerStats = PlayerStats(context: modelContext) //create new instance
-
+        if playerStats.isEmpty {
             setNewPlayerStats(playerName: playerName, playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns,  self: false)
-            
-        }
+        } // player not in database
         
-       else { // player in database
-           
+       else {
            updatePlayerStats(playerStats: playerStats[0], playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns)
-
-       }
+       } // player in database
     }
 
 }

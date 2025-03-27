@@ -1083,12 +1083,12 @@
         }
       }
     },
-    "W-L" : {
+    "W – L" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "W - L"
+            "value" : "W – L"
           }
         },
         "es-419" : {
@@ -1112,41 +1112,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "G – B"
-          }
-        }
-      }
-    },
-    "W–L" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "W - L"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
             "value" : "G – P"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "G – P"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "V – D"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "G – B"
           }
         }
       }

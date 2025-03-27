@@ -9,6 +9,142 @@ import SwiftUI
 import SwiftData
 import Charts
 
+enum LabelOrder {
+    case playerUp
+    case playerDown
+    case winsUp
+    case winsDown
+    case pointsUp
+    case pointsDown
+    case inningsUp
+    case inningsDown
+    case longRunUp
+    case longRunDown
+    case averageUp
+    case averageDown
+    case none
+} //Cases for different orderings on grid stats table for iPhones - eliminate this and the whole grid view when Tables works well with iPhones
+
+struct playerLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .playerUp:
+            HStack{
+                Text("Player")
+                Image(systemName: "chevron.up")
+            }
+        case .playerDown:
+            HStack{
+                Text("Player")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("Player")
+        }
+    }
+} //"Player" label with up/down chevrons for grid sorting
+
+struct winsLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .winsUp:
+            HStack{
+                Text("W – L")
+                Image(systemName: "chevron.up")
+            }
+        case .winsDown:
+            HStack{
+                Text("W – L")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("W – L")
+        }
+    }
+}//"W – L" label with up/down chevrons for grid sorting
+
+struct pointsLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .pointsUp:
+            HStack{
+                Text("Points")
+                Image(systemName: "chevron.up")
+            }
+        case .pointsDown:
+            HStack{
+                Text("Points")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("Points")
+        }
+    }
+}//"Points" label with up/down chevrons for grid sorting
+
+struct inningsLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .inningsUp:
+            HStack{
+                Text("Innings")
+                Image(systemName: "chevron.up")
+            }
+        case .inningsDown:
+            HStack{
+                Text("Innings")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("Innings")
+        }
+    }
+}//"Innings" label with up/down chevrons for grid sorting
+
+struct longRunLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .longRunUp:
+            HStack{
+                Text("Long Run")
+                Image(systemName: "chevron.up")
+            }
+        case .longRunDown:
+            HStack{
+                Text("Long Run")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("Long Run")
+        }
+    }
+}//"Long Run" label with up/down chevrons for grid sorting
+
+struct averageLabel: View {
+    @Binding var labelOrder: LabelOrder
+    var body: some View {
+        switch labelOrder {
+        case .averageUp:
+            HStack{
+                Text("Average")
+                Image(systemName: "chevron.up")
+            }
+        case .averageDown:
+            HStack{
+                Text("Average")
+                Image(systemName: "chevron.down")
+            }
+        default:
+            Text("Average")
+        }
+    }
+}//"Average" label with up/down chevrons for grid sorting
+
 let columns = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 6)
 
 struct StatsView: View {
@@ -38,16 +174,47 @@ struct StatsView: View {
 
 struct headers: View {
     @Binding var sortOrder: SortDescriptor<PlayerStats>
+    @State private var labelOrder: LabelOrder = .none
     
     var body: some View {
         LazyVGrid(columns: columns) {
             Group{
-                Button("Player") {sortOrder = SortDescriptor(\PlayerStats.name, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
-                Button("W–L") {sortOrder = SortDescriptor(\PlayerStats.wins, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
-                Button("Points") {sortOrder = SortDescriptor(\PlayerStats.points, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
-                Button("Innings") {sortOrder = SortDescriptor(\PlayerStats.innings, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
-                Button("Long Run") {sortOrder = SortDescriptor(\PlayerStats.longRun, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
-                Button("Average") {sortOrder = SortDescriptor(\PlayerStats.lastAverage, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.name, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .playerUp : .playerDown
+                } label: {
+                    playerLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for Player Name
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.wins, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .winsUp : .winsDown
+                } label: {
+                    winsLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for W – L
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.points, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .pointsUp : .pointsDown
+                } label: {
+                    pointsLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for Points
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.innings, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .inningsUp : .inningsDown
+                } label: {
+                    inningsLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for Innings
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.longRun, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .longRunUp : .longRunDown
+                } label: {
+                    longRunLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for Long Run
+                Button {
+                    sortOrder = SortDescriptor(\PlayerStats.lastAverage, order: (sortOrder.order == .reverse) ? .forward : .reverse)
+                    labelOrder = sortOrder.order == .forward ? .averageUp : .averageDown
+                } label: {
+                    averageLabel(labelOrder: $labelOrder)
+                } //Dynamic Column Header for Average
             }
             .foregroundColor(Color.blue)
             .font(.title2)
@@ -115,7 +282,7 @@ struct table: View {
                 Text(stats.name!)
             }
             TableColumn("Games", value: \.games) {stats in Text("\(stats.games)")}.alignment(.center)
-            TableColumn("W-L", value: \.wins) {stats in Text("\(stats.wins)" + " - " + "\(stats.losses)")}.alignment(.center)
+            TableColumn("W – L", value: \.wins) {stats in Text("\(stats.wins)" + " - " + "\(stats.losses)")}.alignment(.center)
             TableColumn("Points", value: \.points) {stats in Text("\(stats.points)")}.alignment(.center)
             TableColumn("Innings", value: \.innings) {stats in Text("\(stats.innings)")}.alignment(.center)
             TableColumn("Long Run", value: \.longRun) {stats in Text("\(stats.longRun)")}.alignment(.center)
