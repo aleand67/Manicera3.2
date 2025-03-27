@@ -9,9 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) var modelContext
-    @Query var stats: [PlayerStats]
-    @Query var boxScores: [BoxScore]
+//    @Environment(\.modelContext) var modelContext
+//    @Query var stats: [PlayerStats]
+//    @Query var boxScores: [BoxScore]
     
     @EnvironmentObject var turns: TurnsModel
     @EnvironmentObject var game: CurrentBoxScore

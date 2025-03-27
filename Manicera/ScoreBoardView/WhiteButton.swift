@@ -24,9 +24,9 @@ struct WhiteButton: View {
             turns.player = .white //set white turn
             turns.orangeScore = turns.orangeScore + turns.run //finalize orange turn
             if turns.overallTurn == 0 {
-                turns.firstPlayer = .white //first player is white
+                turns.firstPlayer = .white
                 currentBoxScore.firstColor = .white
-            }
+            }//first player is white
             else {
                 turns.orangeAvg = Double(turns.orangeScore) / Double(turns.inning)
             } //finalize orange average

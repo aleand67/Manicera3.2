@@ -12,6 +12,7 @@ import Charts
 let columns = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 6)
 
 struct StatsView: View {
+    @State var sortOrder = SortDescriptor(\PlayerStats.wins)
     var body: some View {
         VStack{
             Text("Individual Stats")
@@ -27,7 +28,7 @@ struct StatsView: View {
                     .preferredColorScheme(.dark) //needed to deal with disparity on how charts are displayed in iPad vs...
             }
             else {
-                grid()
+                grid(sortOrder: $sortOrder)
                     .preferredColorScheme(.light) //... iPhone
             }
         }
@@ -35,67 +36,75 @@ struct StatsView: View {
     }
 }
 
-private func headerView() -> some View {
+struct headers: View {
+    @Binding var sortOrder: SortDescriptor<PlayerStats>
     
-    LazyVGrid(columns: columns) {
-        Group{
-            Text("Player") 
-            Text("W–L")
-            Text("Points")
-            Text("Innings")
-            Text("Average")
-            Text("Long Run")
-            
+    var body: some View {
+        LazyVGrid(columns: columns) {
+            Group{
+                Button("Player") {sortOrder = SortDescriptor(\PlayerStats.name, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button("W–L") {sortOrder = SortDescriptor(\PlayerStats.wins, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button("Points") {sortOrder = SortDescriptor(\PlayerStats.points, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button("Innings") {sortOrder = SortDescriptor(\PlayerStats.innings, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button("Long Run") {sortOrder = SortDescriptor(\PlayerStats.longRun, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+                Button("Average") {sortOrder = SortDescriptor(\PlayerStats.lastAverage, order: (sortOrder.order == .reverse) ? .forward : .reverse)}
+            }
+            .foregroundColor(Color.blue)
+            .font(.title2)
+            .padding(.bottom, 5)
+            .background(Color.black)
         }
-        .foregroundColor(Color.blue)
-        .font(.title2)
-        .padding(.bottom, 5)
-        .background(Color.black)
     }
 }
     
 struct grid: View {
-    @Query(sort: \PlayerStats.wins, order: .reverse) var stats: [PlayerStats]
-    @Environment(\.modelContext) var modelContext
+    @Binding var sortOrder: SortDescriptor<PlayerStats>
     var body: some View {
-        if stats.count > 0 {// if at least one player in record
-            ScrollView([.vertical]) {
-                LazyVGrid(columns: columns, spacing: 10, pinnedViews: [.sectionHeaders]) {
-                    Section(header: headerView()){
-                        ForEach(stats, id: \.id) { player in
-                            Group{
-                                nameCell(player: player)
-                                Text("\(player.wins)" + " - " + "\(player.losses)")
-                                Text("\(player.points)")
-                                Text("\(player.innings)")
-                                Text("\((player.averages.last ?? 0.0), specifier: "%.3f")")
-                                Text("\(player.longRun)")
-                            }
-                            .font(.title3)
-                            .foregroundColor(.gray)
-                            .padding(.bottom, 2)
-                            .scrollTransition { content, phase in
-                                content
-                                    .opacity(phase.isIdentity ? 1 : 0)
-                                    .scaleEffect(phase.isIdentity ? 1 : 0.5)
-                                    .blur(radius: phase.isIdentity ? 0 : 10)
-                            } //this hides the data rows as you scroll behind the header
-                            .padding(.horizontal)
-                            .foregroundColor(Color.white)
-                        }
-                    }
+        ScrollView([.vertical]) {
+            LazyVGrid(columns: columns, spacing: 10, pinnedViews: [.sectionHeaders]) {
+                Section(header: headers(sortOrder: $sortOrder)){
+                    gridRows(sortOrder: sortOrder) // need to separate child view to allow for dynamic sorting using @Query
                 }
             }
-        } else {
-            Color.black
         }
+    }
+}
+
+struct gridRows: View {
+    @Query(sort: \PlayerStats.name) var stats: [PlayerStats]
+    var body: some View {
+        ForEach(stats, id: \.id) { player in
+            Group{
+                nameCell(player: player) //Player name with contextual menu with chart and delete option
+                Text("\(player.wins)" + " - " + "\(player.losses)")
+                Text("\(player.points)")
+                Text("\(player.innings)")
+                Text("\(player.longRun)")
+                Text("\((player.lastAverage), specifier: "%.3f")")
+            }
+            .font(.title3)
+            .foregroundColor(.gray)
+            .padding(.bottom, 2)
+            .scrollTransition { content, phase in
+                content
+                    .opacity(phase.isIdentity ? 1 : 0)
+                    .scaleEffect(phase.isIdentity ? 1 : 0.5)
+                    .blur(radius: phase.isIdentity ? 0 : 10)
+            } //this hides the data rows as you scroll behind the header
+            .padding(.horizontal)
+            .foregroundColor(Color.white)
+        }
+    }
+    
+    init(sortOrder: SortDescriptor<PlayerStats>) {
+        _stats = Query(sort: [sortOrder])
     }
 }
 
 struct table: View {
     @Query var stats: [PlayerStats]
     @Environment(\.modelContext) var modelContext
-    @State private var sortOrder = [KeyPathComparator(\PlayerStats.averages.last, order: .reverse)]
+    @State private var sortOrder = [KeyPathComparator(\PlayerStats.lastAverage, order: .reverse)]
     @State private var selection: PlayerStats.ID?
     @State private var showChart: Bool = false
     @State private var showAlert: Bool = false
@@ -110,40 +119,39 @@ struct table: View {
             TableColumn("Points", value: \.points) {stats in Text("\(stats.points)")}.alignment(.center)
             TableColumn("Innings", value: \.innings) {stats in Text("\(stats.innings)")}.alignment(.center)
             TableColumn("Long Run", value: \.longRun) {stats in Text("\(stats.longRun)")}.alignment(.center)
-            TableColumn("Average", value: \.averages.last!) {stats in Text("\((stats.averages.last ?? 0), specifier: "%.3f")")}.alignment(.center)
+            TableColumn("Average", value: \.averages.last!) {stats in Text("\((stats.lastAverage), specifier: "%.3f")")}.alignment(.center)
         }
         rows: {
             ForEach(stats.sorted(using: sortOrder)) { row in
                 TableRow(row)
-                .contextMenu {
-                    Button("Average Graph") {
-                        selection = row.id
-                        showChart.toggle()
+                    .contextMenu {
+                        Button("Average Graph") {
+                            selection = row.id
+                            showChart.toggle()
+                        }
+                        
+                        Divider()
+                        
+                        Button(role: .destructive) {
+                            selection = row.id
+                            showAlert.toggle()
+                        } label: {
+                            Label("Delete Player", systemImage: "trash")
+                        } //delete player
+
                     }
-                    
-                    Divider()
-                    
-                    Button(role: .destructive) {
-                        selection = row.id
-                        showAlert.toggle()
-                    } label: {
-                        Label("Delete Player", systemImage: "trash")
-                                    }
-                                    .padding(10)
-                                    .foregroundColor(Color.white)
-                    }
-                }
-            }
-            .sheet(isPresented: $showChart) {
-            if let selected = stats.first(where: { $0.id == selection }) {
-                ZStack {
-                    chart(player: selected)
-                        .presentationDetents([.fraction(0.40)]) //set frame tight to graph
-                }
-            } else {
-                Text("No Data")
             }
         }
+        .sheet(isPresented: $showChart) {
+            if let selected = stats.first(where: { $0.id == selection }) {
+            ZStack {
+                chart(player: selected)
+                    .presentationDetents([.fraction(0.40)]) //set frame tight to graph
+            }
+        } else {
+            Text("No Data")
+        }
+        }// sheet with chart
         .alert("Are you sure you want to delete this player?", isPresented: $showAlert) {
             Button("yes, delete this player", role: .destructive) {
                 if let index = stats.firstIndex(where: { $0.id == selection }) {
@@ -151,7 +159,7 @@ struct table: View {
                 }
             }
             Button("No. Don't delete the player", role: .cancel) { }
-        } message: {Text("Can't Undo")}
+        } message: {Text("Can't Undo")} // delete player dialog
     }
 }
 
@@ -167,8 +175,19 @@ struct chart: View {
                         x: PlottableValue.value("", entry),
                         y: PlottableValue.value("average", player.averages[entry])
                     )
-                    .foregroundStyle(.blue)
                     .symbol(.circle)
+                    .foregroundStyle(.blue)
+                    
+//                    PointMark(x: PlottableValue.value("", entry),
+//                              y: PlottableValue.value("average", player.averages[entry])
+//                          )
+//                    .foregroundStyle(.blue)
+//                    .annotation(position: .trailing) {
+//                        Text("\(player.averages[entry], specifier: "%.3f")")
+//                            .font(.system(.caption))
+//                            .foregroundColor(Color.white)
+//                            .background(Color.blue, in: RoundedRectangle(cornerRadius: 5))
+//                    }
                 }
             }
             .chartXAxis(.hidden)

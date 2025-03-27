@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-//func average(_ score: Int, _ innings: Int) -> Double {
-//    if innings == 0 {
-//        return 0.0
-//    } else {
-//        return Double(score) / Double(innings)
-//    }
-//}
-
 enum playerId: Codable {
     case orange, white
 }

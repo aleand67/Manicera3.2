@@ -33,6 +33,7 @@ final class BoxScore {
 final class PlayerStats {
     var id: UUID = UUID()
     var averages: [Double] = []
+    var lastAverage: Double = 0.0 //needed rather than averages.last because computed properties don't work with sorting
     var games: Int = 0
     var innings: Int = 0
     var longRun: Int = 0
@@ -41,8 +42,9 @@ final class PlayerStats {
     var points: Int = 0
     var wins: Int = 0
     
-    init(averages: [Double], games: Int, innings: Int, longRun: Int, losses: Int, name: String, points: Int, wins: Int) {
+    init(averages: [Double], lastAverage: Double, games: Int, innings: Int, longRun: Int, losses: Int, name: String, points: Int, wins: Int) {
         self.averages = averages
+        self.lastAverage = lastAverage
         self.games = games
         self.innings = innings
         self.longRun = longRun

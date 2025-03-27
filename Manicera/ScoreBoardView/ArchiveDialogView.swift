@@ -17,7 +17,7 @@ struct ArchiveDialogView: View {
     
     @FocusState var focus: FocusableField?
     @Environment(\.modelContext) var modelContext
-    @Query var stats: [PlayerStats]
+    //@Query var stats: [PlayerStats]
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
@@ -267,10 +267,11 @@ struct ArchiveDialogView: View {
         let losses = ( (playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +))  && !self ) ? 1 : 0
         let points =  self ? playerRuns.reduce(0,+) + otherPlayerRuns.reduce(0,+) : playerRuns.reduce(0, +)
         let longRun = self ? max(playerRuns.max() ?? 0, otherPlayerRuns.max() ?? 0) : playerRuns.max() ?? 0
-        let averages = [average(points, innings)]
+        let lastAverage = average(points, innings)
+        let averages = [lastAverage]
         let games = self ? 2 : 1
         
-        let newPlayer = PlayerStats(averages: averages, games: games, innings: innings, longRun: longRun,  losses: losses, name: playerName,  points: points, wins: wins)
+        let newPlayer = PlayerStats(averages: averages, lastAverage: lastAverage, games: games, innings: innings, longRun: longRun,  losses: losses, name: playerName,  points: points, wins: wins)
         
         modelContext.insert(newPlayer)
     }
@@ -283,7 +284,8 @@ struct ArchiveDialogView: View {
         playerStats.wins = playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +) ? playerStats.wins + 1 : playerStats.wins + 0
         playerStats.losses = playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +) ? playerStats.losses + 1 : playerStats.losses + 0
         if playerStats.innings > 0 {
-            playerStats.averages.append(average(playerStats.points, playerStats.innings))
+            playerStats.lastAverage = average(playerStats.points, playerStats.innings)
+            playerStats.averages.append(playerStats.lastAverage)
         }
     }
     

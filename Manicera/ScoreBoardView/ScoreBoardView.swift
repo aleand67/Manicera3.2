@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import SwiftData
+//import SwiftData
 
 struct ScoreboardView: View {
-    @Query var boxScores: [BoxScore]
+    //@Query var boxScores: [BoxScore]
     
     @EnvironmentObject var turns: TurnsModel
     @EnvironmentObject var currentBoxScore: CurrentBoxScore
@@ -66,7 +66,7 @@ struct ScoreboardView: View {
                             Spacer()
                             
                             avgView(avg: turns.orangeAvg, tall: tall, wide: wide, color: Color("OrangeScript")) //show orange average
-                       }
+                       } //orange side
                         if UserDefaults.standard.wasOScoreButtonUsed == false && turns.player == .orange {
                             Text("Orange-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
                             .foregroundColor(Color.white)
@@ -84,18 +84,18 @@ struct ScoreboardView: View {
                             if turns.player == .orange {
                                 UserDefaults.standard.wasOScoreButtonUsed = true
                                     turns.carambola()
-                            }//score orange carambola
-                        }
+                            }
+                        }//score orange carambola
                         .simultaneously(with: LongPressGesture(minimumDuration: 1, maximumDistance: 10)
+                            .updating($orangeIsPressed) { value, state, _ in state = value
+                                }//highlight long press
                             .onEnded({_ in
                                     if turns.player == .orange {
                                         turns.notCarambola(data: currentBoxScore)
                                         colorChange()
                                     }
-                                })//revert orange carambola
-                                .updating($orangeIsPressed) { value, state, _ in state = value
-                                    }//highlight long press
-                        )
+                                })
+                        )//revert orange carambola
                     )
                     
                     ZStack{
@@ -111,7 +111,7 @@ struct ScoreboardView: View {
                             
                             
                             avgView(avg: turns.whiteAvg, tall: tall, wide: wide, color: Color("WhiteScript")) //show white average
-                        }
+                        } //white side
                         if UserDefaults.standard.wasWScoreButtonUsed == false && turns.player == .white {
                             Text("White-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
                                 .foregroundColor(Color.white)
@@ -130,9 +130,9 @@ struct ScoreboardView: View {
                             if turns.player == .white {
                                 UserDefaults.standard.wasWScoreButtonUsed = true
                                     turns.carambola()
-                            }//score white carambola
-                        }
-                    .simultaneously(with: LongPressGesture(minimumDuration: 1, maximumDistance: 10)
+                            }
+                        }//score white carambola
+                        .simultaneously(with: LongPressGesture(minimumDuration: 1, maximumDistance: 10)
                         .updating($whiteIsPressed) { value, state, _ in state = value
                         }//highlight long press
                         .onEnded({_ in
@@ -140,8 +140,8 @@ struct ScoreboardView: View {
                                     turns.notCarambola(data: currentBoxScore)
                                     colorChange()
                                 }
-                            })//revert white carambola
-                    )
+                            })
+                    )//revert white carambola
                     )
                 }
                 .background(Color.black)
@@ -150,17 +150,16 @@ struct ScoreboardView: View {
                     .frame(height: tall*0.60, alignment: .bottom)
                 
                 if archiveDialog {
-                    ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog) //show save screen when game over
-                }
+                    ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
+                } //show save screen when game over
                 
                 VStack{
-
-                    Rectangle() //top draggable region to switch tabs
-                        .fill(.white.opacity(0.01))
+                    Rectangle()
+                        .fill(.white.opacity(0.0001))
                         .frame(width: wide, height: tall * swipeFactor)
 
                     Spacer()
-                }
+                }//top draggable region to switch tabs
 
                 if UserDefaults.standard.wasInningButtonUsed == false {
                     Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
