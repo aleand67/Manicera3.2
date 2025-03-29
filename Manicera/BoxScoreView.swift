@@ -212,8 +212,7 @@ struct IndividualBoxScoreView: View {
 }
 
 #Preview {
-    let currentBoxScore = CurrentBoxScore(id: UUID(), firstColor: .white, firstRuns: [0,0,2,3,1,0,3], secondRuns: [1,0,1,0,2,3])
     boxScoreView()
         .modelContainer(boxScorePreviewContainer)
-        .environmentObject(currentBoxScore)
+        .environmentObject(CurrentBoxScore.example)
 }

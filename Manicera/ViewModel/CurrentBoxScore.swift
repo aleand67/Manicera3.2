@@ -21,6 +21,8 @@ final class CurrentBoxScore: ObservableObject, Identifiable {
         secondRuns = []
     }
     
+    static let example = CurrentBoxScore(id: UUID(), firstColor: .white, firstRuns: [0,0,2,3,1,0,3], secondRuns: [1,0,1,0,2,3])
+    
     init(id: UUID = UUID(), firstColor: playerId? = nil, firstRuns: [Int] = [], secondRuns: [Int] = []) {
         self.id = id
         self.firstColor = firstColor

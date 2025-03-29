@@ -248,3 +248,13 @@ struct scoreboardView: View {
     }
 
 }
+
+struct scoreBoardView_Previews: PreviewProvider {
+    static let turns = TurnsModel()
+    static let currentBoxScore = CurrentBoxScore()
+    static var previews: some View {
+        scoreboardView()
+            .environmentObject(turns)
+            .environmentObject(currentBoxScore)
+    }
+}

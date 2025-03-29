@@ -43,8 +43,7 @@ struct OrangeButton: View {
             
             UserDefaults.standard.wasOrangeButtonUsed = true
         })
-        {
-            VStack{
+        {VStack{
             (UserDefaults.standard.wasOrangeButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
             Text(orangeButtonText)}
                 .font(.system(size: bigButtonSize*0.02))
