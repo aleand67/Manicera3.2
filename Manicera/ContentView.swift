@@ -13,7 +13,7 @@ struct ContentView: View {
 //    @Query var stats: [PlayerStats]
 //    @Query var boxScores: [BoxScore]
     
-    @EnvironmentObject var turns: TurnsModel
+    //@EnvironmentObject var turns: TurnsModel
     @EnvironmentObject var game: CurrentBoxScore
     
     @State private var selectedTab = "Middle"
@@ -22,17 +22,17 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            StatsView()
+            statsView()
                 .tabItem{Image(systemName:"number")}
                 .tag("Left")
                 .onAppear{hideStatusBar = false}
             
-            ScoreboardView()
+            scoreboardView()
                 .tabItem{Image(systemName:"timelapse")}
                 .tag("Middle")
                 .onAppear{hideStatusBar = true}
             
-            BoxScoreView()
+            boxScoreView()
                 .tabItem{Image(systemName:"table")}
                 .tag("Right")
                 .onAppear{hideStatusBar = false}

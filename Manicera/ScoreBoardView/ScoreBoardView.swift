@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-//import SwiftData
+import SwiftData
 
-struct ScoreboardView: View {
-    //@Query var boxScores: [BoxScore]
+struct scoreboardView: View {
     
     @EnvironmentObject var turns: TurnsModel
     @EnvironmentObject var currentBoxScore: CurrentBoxScore

@@ -14,14 +14,14 @@ enum playerId: Codable {
 final class TurnsModel: ObservableObject {
     
     @EnvironmentObject var currentBoxScore: CurrentBoxScore
-    @Published var run: Int = 0
+    @Published var run: Int
     var player: playerId?
-    var orangeScore: Int = 0
-    var whiteScore: Int = 0
-    var overallTurn: Int = 0
-    var inning: Int = 0
-    var orangeAvg: Double = 0.0
-    var whiteAvg: Double = 0.0
+    var orangeScore: Int
+    var whiteScore: Int
+    var overallTurn: Int
+    var inning: Int
+    var orangeAvg: Double
+    var whiteAvg: Double
     var firstPlayer: playerId?
                     
     func carambola() {
@@ -105,6 +105,18 @@ final class TurnsModel: ObservableObject {
         orangeAvg = 0.0
         whiteAvg = 0.0
         firstPlayer = nil
+    }
+    
+    init(run: Int = 0, player: playerId? = nil, orangeScore: Int = 0, whiteScore: Int = 0, overallTurn: Int = 0, inning: Int = 0, orangeAvg: Double = 0.0, whiteAvg: Double = 0.0, firstPlayer: playerId? = nil) {
+        self.run = run
+        self.player = player
+        self.orangeScore = orangeScore
+        self.whiteScore = whiteScore
+        self.overallTurn = overallTurn
+        self.inning = inning
+        self.orangeAvg = orangeAvg
+        self.whiteAvg = whiteAvg
+        self.firstPlayer = firstPlayer
     }
     
 }

@@ -33,14 +33,14 @@ struct playerLabel: View {
             HStack{
                 Text("Player")
                 Image(systemName: "chevron.up")
-            }
+            }.padding(.horizontal, 10)
         case .playerDown:
             HStack{
                 Text("Player")
                 Image(systemName: "chevron.down")
-            }
+            }.padding(.horizontal, 10)
         default:
-            Text("Player")
+            Text("Player").padding(.horizontal, 25) //making space to cover long names
         }
     }
 } //"Player" label with up/down chevrons for grid sorting
@@ -53,14 +53,14 @@ struct winsLabel: View {
             HStack{
                 Text("W – L")
                 Image(systemName: "chevron.up")
-            }
+            }.padding(.horizontal, 10)
         case .winsDown:
             HStack{
                 Text("W – L")
                 Image(systemName: "chevron.down")
-            }
+            }.padding(.horizontal, 10)
         default:
-            Text("W – L")
+            Text("W – L").padding(.horizontal, 5)
         }
     }
 }//"W – L" label with up/down chevrons for grid sorting
@@ -147,7 +147,7 @@ struct averageLabel: View {
 
 let columns = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 6)
 
-struct StatsView: View {
+struct statsView: View {
     @State var sortOrder = SortDescriptor(\PlayerStats.wins)
     var body: some View {
         VStack{
@@ -286,7 +286,7 @@ struct table: View {
             TableColumn("Points", value: \.points) {stats in Text("\(stats.points)")}.alignment(.center)
             TableColumn("Innings", value: \.innings) {stats in Text("\(stats.innings)")}.alignment(.center)
             TableColumn("Long Run", value: \.longRun) {stats in Text("\(stats.longRun)")}.alignment(.center)
-            TableColumn("Average", value: \.averages.last!) {stats in Text("\((stats.lastAverage), specifier: "%.3f")")}.alignment(.center)
+            TableColumn("Average", value: \.lastAverage) {stats in Text("\((stats.lastAverage), specifier: "%.3f")")}.alignment(.center)
         }
         rows: {
             ForEach(stats.sorted(using: sortOrder)) { row in
@@ -380,6 +380,7 @@ struct nameCell: View {
     @State var player: PlayerStats
     var body: some View {
         Text("\(player.name!)")
+            .lineLimit(1)
             .foregroundColor(.white)
             .contextMenu {
                 Button("Average Graph") {
@@ -407,3 +408,7 @@ struct nameCell: View {
     }
 }
 
+#Preview {
+    statsView()
+        .modelContainer(statsPreviewContainer)
+}

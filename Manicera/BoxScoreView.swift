@@ -22,9 +22,9 @@ private func color2(first: playerId?) -> Color {
     return (first == .orange) ? Color("WhiteFeedback") : Color("OrangeFeedback")
 }
 
-struct BoxScoreView: View {
+struct boxScoreView: View {
     @Query(sort: \BoxScore.date, order: .reverse) var boxScores: [BoxScore]
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
+    @Environment(CurrentBoxScore.self) var currentBoxScore
     @Environment(\.modelContext) var modelContext
     @State var showArmaggedonWarning: Bool = false
     var body: some View {
@@ -82,18 +82,20 @@ struct BoxScoreView: View {
 }
 
 private func savedToBsD(oldScoreBox: BoxScore) -> CurrentBoxScore { //transform saved boxscores into current ones for displaying
-    let boxScore = CurrentBoxScore()
-        
-    boxScore.firstColor = oldScoreBox.firstColor
-    boxScore.firstRuns = oldScoreBox.firstRuns
-    boxScore.secondRuns = oldScoreBox.secondRuns
+    let boxScore = CurrentBoxScore(
+        id: UUID(),
+        firstColor: oldScoreBox.firstColor,
+        firstRuns: oldScoreBox.firstRuns,
+        secondRuns: oldScoreBox.secondRuns
+    )
+    
     return boxScore
 }
 
 private func headerView(game: CurrentBoxScore,  firstPlayerName: String?, secondPlayerName: String?, date: Date?) ->  some View {
     
     LazyHGrid(rows: rows, spacing:0) {
-        if date != nil { //if old game
+        if date != nil {
             Group{
                 Text(" ")
                     .padding(10)
@@ -122,7 +124,7 @@ private func headerView(game: CurrentBoxScore,  firstPlayerName: String?, second
             }
             .frame(width:120)
             .background(Color.black)
-        }
+        } //if old game
         Group{
             Text("Total")
                 .frame(width:60)
@@ -209,3 +211,9 @@ struct IndividualBoxScoreView: View {
     }
 }
 
+#Preview {
+    let currentBoxScore = CurrentBoxScore(id: UUID(), firstColor: .white, firstRuns: [0,0,2,3,1,0,3], secondRuns: [1,0,1,0,2,3])
+    boxScoreView()
+        .modelContainer(boxScorePreviewContainer)
+        .environmentObject(currentBoxScore)
+}

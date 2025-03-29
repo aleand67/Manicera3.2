@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct ManiceraApp: App {
-    
+
     @ObservedObject var turns = TurnsModel()
     @ObservedObject var currentBoxScore = CurrentBoxScore()
     

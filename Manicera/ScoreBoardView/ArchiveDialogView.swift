@@ -212,36 +212,36 @@ struct ArchiveDialogView: View {
             modelContext.insert(boxScoreRecord)
             
             // Deal with Stats now...
-            
+            let practiceGame: Bool = orangePlayerName == whitePlayerName //if playing against self -> practice
             let orangePlayerStats = statsRequestName(name: orangePlayerName) //fetch orange player stats
             
             let whitePlayerStats = statsRequestName(name: whitePlayerName) //fetch white player stats
             
-            if (orangePlayerName == whitePlayerName && orangePlayerStats.isEmpty) {
+            if (practiceGame && orangePlayerStats.isEmpty) {
                 
-                setNewPlayerStats(playerName: orangePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns, self: true)
+                setNewPlayerStats(playerName: orangePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns, practiceGame: practiceGame)
                 
             } //set new player playing against self
             else {
                 
                 if firstColor == .orange {
                     
-                    setOrUpdatePlayerStats(playerStats: orangePlayerStats, playerName: orangePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns)
+                    setOrUpdatePlayerStats(playerStats: orangePlayerStats, playerName: orangePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns, practiceGame: practiceGame)
                     
                     //set or update white player stats (white player is second)
                     
-                    setOrUpdatePlayerStats(playerStats: whitePlayerStats, playerName: whitePlayerName, playerRuns: secondRuns, otherPlayerRuns: firstRuns)
+                    setOrUpdatePlayerStats(playerStats: whitePlayerStats, playerName: whitePlayerName, playerRuns: secondRuns, otherPlayerRuns: firstRuns, practiceGame: practiceGame)
                     
                     
                 } // if orange player is first
                 
                 else {
                     
-                    setOrUpdatePlayerStats(playerStats: orangePlayerStats, playerName: orangePlayerName, playerRuns: secondRuns, otherPlayerRuns: firstRuns)
+                    setOrUpdatePlayerStats(playerStats: orangePlayerStats, playerName: orangePlayerName, playerRuns: secondRuns, otherPlayerRuns: firstRuns, practiceGame: practiceGame)
                     
                     //set or update white player stats (white player is first)
                     
-                    setOrUpdatePlayerStats(playerStats: whitePlayerStats, playerName: whitePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns)
+                    setOrUpdatePlayerStats(playerStats: whitePlayerStats, playerName: whitePlayerName, playerRuns: firstRuns, otherPlayerRuns: secondRuns, practiceGame: practiceGame)
                     
                 } // if orange player is second
                 
@@ -259,41 +259,41 @@ struct ArchiveDialogView: View {
         return try! modelContext.fetch(statsRequest)
     } //fetch individual player stats function
     
-    func setNewPlayerStats(playerName: String, playerRuns: [Int], otherPlayerRuns: [Int], self: Bool){
-        let innings = self ? playerRuns.count + otherPlayerRuns.count : playerRuns.count
-        let wins =  ( (playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +))  && !self ) ? 1 : 0 // player can't get win vs. self
-        let losses = ( (playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +))  && !self ) ? 1 : 0
-        let points =  self ? playerRuns.reduce(0,+) + otherPlayerRuns.reduce(0,+) : playerRuns.reduce(0, +)
-        let longRun = self ? max(playerRuns.max() ?? 0, otherPlayerRuns.max() ?? 0) : playerRuns.max() ?? 0
+    func setNewPlayerStats(playerName: String, playerRuns: [Int], otherPlayerRuns: [Int], practiceGame: Bool){
+        let innings = practiceGame ? playerRuns.count + otherPlayerRuns.count : playerRuns.count
+        let wins =  ( (playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +))  && !practiceGame ) ? 1 : 0 // player can't get win vs. self
+        let losses = ( (playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +))  && !practiceGame ) ? 1 : 0
+        let points =  practiceGame ? playerRuns.reduce(0,+) + otherPlayerRuns.reduce(0,+) : playerRuns.reduce(0, +)
+        let longRun = practiceGame ? max(playerRuns.max() ?? 0, otherPlayerRuns.max() ?? 0) : playerRuns.max() ?? 0
         let lastAverage = average(points, innings)
         let averages = [lastAverage]
-        let games = self ? 2 : 1
+        let games = practiceGame ? 2 : 1
         
         let newPlayer = PlayerStats(averages: averages, lastAverage: lastAverage, games: games, innings: innings, longRun: longRun,  losses: losses, name: playerName,  points: points, wins: wins)
         
         modelContext.insert(newPlayer)
     }
     
-    func updatePlayerStats(playerStats: PlayerStats, playerRuns: [Int], otherPlayerRuns: [Int]) {
+    func updatePlayerStats(playerStats: PlayerStats, playerRuns: [Int], otherPlayerRuns: [Int], practiceGame: Bool) {
         playerStats.games += 1
         playerStats.innings += playerRuns.count
         playerStats.points += playerRuns.reduce(0, +)
         playerStats.longRun = playerStats.longRun < (playerRuns.max() ?? 0) ? playerRuns.max()! : playerStats.longRun
-        playerStats.wins = playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +) ? playerStats.wins + 1 : playerStats.wins + 0
-        playerStats.losses = playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +) ? playerStats.losses + 1 : playerStats.losses + 0
+        playerStats.wins = ( (playerRuns.reduce(0, +) > otherPlayerRuns.reduce(0, +))  && !practiceGame ) ? playerStats.wins + 1 : playerStats.wins + 0 // can't get a win against self
+        playerStats.losses = ( (playerRuns.reduce(0, +) < otherPlayerRuns.reduce(0, +))  && !practiceGame ) ? playerStats.losses + 1 : playerStats.losses + 0// can't lose against self
         if playerStats.innings > 0 {
             playerStats.lastAverage = average(playerStats.points, playerStats.innings)
             playerStats.averages.append(playerStats.lastAverage)
         }
     }
     
-    func setOrUpdatePlayerStats(playerStats: [PlayerStats], playerName: String, playerRuns: [Int], otherPlayerRuns: [Int]) {
+    func setOrUpdatePlayerStats(playerStats: [PlayerStats], playerName: String, playerRuns: [Int], otherPlayerRuns: [Int], practiceGame: Bool) {
         if playerStats.isEmpty {
-            setNewPlayerStats(playerName: playerName, playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns,  self: false)
+            setNewPlayerStats(playerName: playerName, playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns,  practiceGame: practiceGame)
         } // player not in database
         
        else {
-           updatePlayerStats(playerStats: playerStats[0], playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns)
+           updatePlayerStats(playerStats: playerStats[0], playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns, practiceGame: practiceGame)
        } // player in database
     }
 
