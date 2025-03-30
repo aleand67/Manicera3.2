@@ -42,6 +42,16 @@ final class PlayerStats {
     var points: Int = 0
     var wins: Int = 0
     
+    static let example = PlayerStats(averages: Array(1...Int.random(in: 21...30)).map {_ in  Double.random(in:0.750...1.230)},
+                                     lastAverage: Double.random(in:0.750...1.230),
+                                     games: Int.random(in:21...30),
+                                     innings: Int.random(in:250...500),
+                                     longRun: Int.random(in:0...7),
+                                     losses: Int.random(in:10...17),
+                                     name: "Alejandro",
+                                     points: Int.random(in:140...350),
+                                     wins: Int.random(in:10...17))
+    
     init(averages: [Double], lastAverage: Double, games: Int, innings: Int, longRun: Int, losses: Int, name: String, points: Int, wins: Int) {
         self.averages = averages
         self.lastAverage = lastAverage

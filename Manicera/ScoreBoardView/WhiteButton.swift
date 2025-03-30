@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let whiteTurn: LocalizedStringKey = "White Turn"
-
 struct WhiteButton: View {
     
     @EnvironmentObject var turns: TurnsModel
@@ -16,7 +14,7 @@ struct WhiteButton: View {
     
     @State var bigButtonSize: CGFloat
     
-    var whiteButtonText = UserDefaults.standard.wasWhiteButtonUsed ?  "" :  whiteTurn
+    var whiteButtonText = UserDefaults.standard.wasWhiteButtonUsed ?  "" :  "White Turn"
     
     var body: some View {
         

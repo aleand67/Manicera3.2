@@ -19,18 +19,18 @@ struct scoreboardView: View {
     @GestureState private var orangeIsPressed = false
     @GestureState private var whiteIsPressed = false
     @State private var buttonFlash: Bool = false
-    @State var newGameFlash: Bool = false
+    @State private var newGameFlash: Bool = false
     @State private var archiveDialog: Bool = false
     
-    var orangeFeedbackColor: Color {
+    private var orangeFeedbackColor: Color {
         if orangeIsPressed == true && turns.player == .orange {return Color("OrangeFeedback")} else {return Color("OrangeManicera")}
     }
     
-    var whiteFeedbackColor: Color {
+    private var whiteFeedbackColor: Color {
         if whiteIsPressed == true && turns.player == .white {return Color("WhiteFeedback")} else {return Color("WhiteManicera")}
     }
     
-    func colorChange() { //flash black when undoing carambola
+    private func colorChange() { //flash black when undoing carambola
         // first toggle makes it black
         buttonFlash.toggle()
         
@@ -160,14 +160,14 @@ struct scoreboardView: View {
                     Spacer()
                 }//top draggable region to switch tabs
 
-                if UserDefaults.standard.wasInningButtonUsed == false {
+                if (UserDefaults.standard.wasInningButtonUsed == false && turns.overallTurn > 0) {
                     Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
                         .padding(2)
-                        .foregroundColor(Color("WhiteManicera"))
-                        .font(.system(size: tall*0.03))
-                        .background(RoundedRectangle(cornerRadius: 10).fill(Color("InningRed")))
+                        .foregroundColor(Color.black)
+                        .font(.system(size: tall*0.03, weight: .light))
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
                         .multilineTextAlignment(.center)
-                        .frame(width: wide*0.80, height: tall*0.75, alignment: .bottom)
+                        .frame(width: wide*0.80, height: tall*0.70, alignment: .bottom)
                 }//restart instructions first time
                 
                 if UserDefaults.standard.wasSwipingUsed == false {
@@ -179,7 +179,7 @@ struct scoreboardView: View {
     }
 
     
-    func scoreView(player: playerId,
+    private func scoreView(player: playerId,
                    score: Int,
                    run: Int,
                    tall: CGFloat,
@@ -204,7 +204,7 @@ struct scoreboardView: View {
         .padding(25)
     }
     
-    func avgView(avg: Double,
+    private func avgView(avg: Double,
                  tall: CGFloat,
                  wide: CGFloat,
                  color: Color) -> some View {
@@ -217,13 +217,13 @@ struct scoreboardView: View {
             .padding(25)
     }
     
-    func swipeHandText(tall: CGFloat) -> some View {
+    private func swipeHandText(tall: CGFloat) -> some View {
         Text(Image(systemName: "hand.draw"))
-            .font(.system(size: tall * 0.06))
+            .font(.system(size: horizontalSizeClass == .compact ? tall * 0.05 : tall * 0.03))
             .fontWeight(.light)
     }//swipe hand SFSymbol for first run swiping instructions
     
-    func swipingInstructions(tall: CGFloat, wide: CGFloat) -> some View {
+    private func swipingInstructions(tall: CGFloat, wide: CGFloat) -> some View {
         HStack{
 
                 swipeHandText(tall: tall)
@@ -231,7 +231,7 @@ struct scoreboardView: View {
                 Spacer()
             
                 Text("Swiping-Instructions \(Image(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))")
-                    .font(.system(size:tall * 0.06))
+                .font(horizontalSizeClass == .compact ? .system(size: tall * 0.05) : .system(size: tall * 0.03))
                     .fontWeight(.light)
 
                 Spacer()
@@ -240,10 +240,10 @@ struct scoreboardView: View {
             
             }
             .padding()
-            .foregroundColor(Color.white)
-            .frame(width: wide*0.98, height: tall*0.10)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color("FeltGreen")).opacity(0.80))
-            .offset(y: -tall*0.4)
+            .foregroundColor(Color.black)
+            .frame(width: horizontalSizeClass == .compact ? wide * 0.90 : wide * 0.98, height: tall*0.05)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+            .offset(y: horizontalSizeClass == .compact ? -tall*0.46 : -tall*0.47)
 
     }
 

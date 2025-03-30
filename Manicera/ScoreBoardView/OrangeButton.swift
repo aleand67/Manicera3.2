@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let orangeTurn: LocalizedStringKey = "Orange Turn"
-
 struct OrangeButton: View {
     
     @EnvironmentObject var turns: TurnsModel
@@ -17,7 +15,7 @@ struct OrangeButton: View {
     @State var bigButtonSize: CGFloat
     
     
-    var orangeButtonText = UserDefaults.standard.wasOrangeButtonUsed ?  "" : orangeTurn
+    var orangeButtonText = UserDefaults.standard.wasOrangeButtonUsed ?  "" : "Orange Turn"
    
     var labelInstruction = UserDefaults.standard.wasWhiteButtonUsed ?  "" :  "hand.tap"
     

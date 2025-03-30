@@ -61,4 +61,13 @@ extension UserDefaults {
             UserDefaults.standard.setValue(newValue, forKey: "wasSwipingUsed")
         }
     }
+    
+    var wasStatsContextMenuUsed: Bool{
+        get {
+            return (UserDefaults.standard.value(forKey: "wasSwipingUsed") as? Bool) ?? false
+        }
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "wasSwipingUsed")
+        }
+    }
 }
