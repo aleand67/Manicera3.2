@@ -9,15 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-//    @Environment(\.modelContext) var modelContext
-//    @Query var stats: [PlayerStats]
-//    @Query var boxScores: [BoxScore]
-    
-    //@EnvironmentObject var turns: TurnsModel
-    @EnvironmentObject var game: CurrentBoxScore
     
     @State private var selectedTab = "Middle"
-    @State var hideStatusBar = true
+    @State private var hideStatusBar = true
+    
+    @AppStorage("wasSwipingUsed") var wasSwipingUsed: Bool = false
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -43,7 +39,7 @@ struct ContentView: View {
         .statusBar(hidden: hideStatusBar)
         .ignoresSafeArea()
         .onChange(of: selectedTab) {
-            UserDefaults.standard.wasSwipingUsed = true
+            wasSwipingUsed = true
         }
     }
 }

@@ -14,10 +14,7 @@ struct OrangeButton: View {
     
     @State var bigButtonSize: CGFloat
     
-    
-    var orangeButtonText = UserDefaults.standard.wasOrangeButtonUsed ?  "" : "Orange Turn"
-   
-    var labelInstruction = UserDefaults.standard.wasWhiteButtonUsed ?  "" :  "hand.tap"
+    @AppStorage("wasOrangeButtonUsed") var wasOrangeButtonUsed: Bool = false
     
     var body: some View {
         
@@ -39,11 +36,11 @@ struct OrangeButton: View {
             let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
             impactHeavy.impactOccurred()
             
-            UserDefaults.standard.wasOrangeButtonUsed = true
+            wasOrangeButtonUsed = true
         })
         {VStack{
-            (UserDefaults.standard.wasOrangeButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
-            Text(orangeButtonText)}
+            (wasOrangeButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
+            Text(wasOrangeButtonUsed ?  "" : "Orange Turn")}
                 .font(.system(size: bigButtonSize*0.02))
                 .foregroundColor(Color("OrangeScript"))
                 .frame(width: bigButtonSize*0.22,

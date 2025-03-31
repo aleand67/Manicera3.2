@@ -14,7 +14,7 @@ struct WhiteButton: View {
     
     @State var bigButtonSize: CGFloat
     
-    var whiteButtonText = UserDefaults.standard.wasWhiteButtonUsed ?  "" :  "White Turn"
+    @AppStorage("wasWhiteButtonUsed") var wasWhiteButtonUsed: Bool = false
     
     var body: some View {
         
@@ -34,12 +34,12 @@ struct WhiteButton: View {
             let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
             impactHeavy.impactOccurred()
             
-            UserDefaults.standard.wasWhiteButtonUsed = true
+            wasWhiteButtonUsed = true
         })
         {
             VStack{
-            (UserDefaults.standard.wasWhiteButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
-            Text(whiteButtonText)}
+                (wasWhiteButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
+                Text(wasWhiteButtonUsed ? "" : "White Turn")}
                 .font(.system(size: bigButtonSize*0.02))
                 .foregroundColor(Color("WhiteScript"))
                 .frame(width: bigButtonSize*0.22,

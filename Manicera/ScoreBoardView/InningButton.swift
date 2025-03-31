@@ -14,6 +14,7 @@ struct InningButton: View {
     @GestureState private var inningIsPressed = false
     @Binding var newGameFlash: Bool
     @Binding var archiveDialog: Bool
+    @AppStorage("wasInningButtonUsed") var wasInningButtonUsed = false
     
     var inningButtonSize: CGFloat {
         return (inningIsPressed && archiveDialog == false) ? bigButtonSize * 0.12 : bigButtonSize * 0.10
@@ -36,7 +37,7 @@ struct InningButton: View {
                 archiveDialog = true
                 }
                 
-                UserDefaults.standard.wasInningButtonUsed = true
+                wasInningButtonUsed = true
                 })
         .updating($inningIsPressed) { value, state, _ in
             state = value

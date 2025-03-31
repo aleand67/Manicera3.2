@@ -22,6 +22,10 @@ struct scoreboardView: View {
     @State private var newGameFlash: Bool = false
     @State private var archiveDialog: Bool = false
     
+    @AppStorage("scoreButtonUsed") var scoreButtonUsed = false
+    @AppStorage("wasInningButtonUsed") var wasInningButtonUsed = false
+    @AppStorage("wasSwipingUsed") var wasSwipingUsed = false
+    
     private var orangeFeedbackColor: Color {
         if orangeIsPressed == true && turns.player == .orange {return Color("OrangeFeedback")} else {return Color("OrangeManicera")}
     }
@@ -66,7 +70,7 @@ struct scoreboardView: View {
                             
                             avgView(avg: turns.orangeAvg, tall: tall, wide: wide, color: Color("OrangeScript")) //show orange average
                        } //orange side
-                        if UserDefaults.standard.wasOScoreButtonUsed == false && turns.player == .orange {
+                        if !scoreButtonUsed && turns.player == .orange {
                             Text("Orange-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
                             .foregroundColor(Color.white)
                             .font(.system(size: tall*0.03))
@@ -81,8 +85,8 @@ struct scoreboardView: View {
                     .gesture(TapGesture()
                         .onEnded{
                             if turns.player == .orange {
-                                UserDefaults.standard.wasOScoreButtonUsed = true
-                                    turns.carambola()
+                                scoreButtonUsed = true
+                                turns.carambola()
                             }
                         }//score orange carambola
                         .simultaneously(with: LongPressGesture(minimumDuration: 1, maximumDistance: 10)
@@ -111,7 +115,7 @@ struct scoreboardView: View {
                             
                             avgView(avg: turns.whiteAvg, tall: tall, wide: wide, color: Color("WhiteScript")) //show white average
                         } //white side
-                        if UserDefaults.standard.wasWScoreButtonUsed == false && turns.player == .white {
+                        if !scoreButtonUsed && turns.player == .white {
                             Text("White-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
                                 .foregroundColor(Color.white)
                                 .font(.system(size: tall*0.03))
@@ -127,7 +131,7 @@ struct scoreboardView: View {
                     .gesture(TapGesture()
                         .onEnded{
                             if turns.player == .white {
-                                UserDefaults.standard.wasWScoreButtonUsed = true
+                                scoreButtonUsed = true
                                     turns.carambola()
                             }
                         }//score white carambola
@@ -160,7 +164,7 @@ struct scoreboardView: View {
                     Spacer()
                 }//top draggable region to switch tabs
 
-                if (UserDefaults.standard.wasInningButtonUsed == false && turns.overallTurn > 0) {
+                if (!wasInningButtonUsed && turns.overallTurn > 0) {
                     Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
                         .padding(2)
                         .foregroundColor(Color.black)
@@ -170,7 +174,7 @@ struct scoreboardView: View {
                         .frame(width: wide*0.80, height: tall*0.70, alignment: .bottom)
                 }//restart instructions first time
                 
-                if UserDefaults.standard.wasSwipingUsed == false {
+                if wasSwipingUsed == false {
                     
                     swipingInstructions(tall: tall, wide: wide)//show swiping instructions the first time
                 }
