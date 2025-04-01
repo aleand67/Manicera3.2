@@ -9,8 +9,8 @@ import SwiftUI
 import SwiftData
 
 enum FocusableField: Hashable {
-  case orange
-  case white
+    case orange
+    case white
 }
 
 struct ArchiveDialogView: View {
@@ -24,10 +24,9 @@ struct ArchiveDialogView: View {
     @EnvironmentObject var currentBoxScore: CurrentBoxScore
     
     @State private var showingConfirmation = false
-    @State var orangePlayerNameDialog = false
-    @State var whitePlayerNameDialog = false
-    @State var orangePlayerName: String = ""
-    @State var whitePlayerName: String = ""
+    @State private var textFieldsShown = false
+    @State private var orangePlayerName: String = ""
+    @State private var whitePlayerName: String = ""
     @Binding var newGameFlash: Bool
     @Binding var archiveDialog: Bool
     
@@ -40,103 +39,109 @@ struct ArchiveDialogView: View {
                 let tall = geometry.size.height
                 let wide = geometry.size.width
                 
-                let wideLeftFactor = verticalSizeClass == .compact ? 0.105 : 0.155 //fine tuning placement orange text input
+                let wideLeftFactor = verticalSizeClass == .compact ? 0.105 : 0.155 //fine tuning placement Keep Game button
                 
-                let wideRightFactor = verticalSizeClass == .compact ? 0.1275 : 0.175 //fine tuning placement white text input
+                let wideRightFactor = verticalSizeClass == .compact ? 0.1275 : 0.175 //fine tuning placement Discard Game button
                                
-                if (orangePlayerNameDialog == false && whitePlayerNameDialog == false) {
-                    Button("Keep Game") {
-                    orangePlayerNameDialog = true
-                    focus = .orange
-                    }// if tapped, show textFields, focus on orange one
-                    .buttonStyle(GreenPill())
-                    .offset(x: -wide*wideLeftFactor, y: tall*0.055)
-                } // if not getting names yet show "keep game"
-                else {
-                    ZStack (alignment: .leading){
-                        TextField("", text: $orangePlayerName)
-                            .playerNameStyle(color: Color("OrangeManicera"), width: wide * 0.3)
-                            .focused($focus, equals: .orange)
-                            .onSubmit {
-                               checkForNamesAndSave(playerName: orangePlayerName, otherPlayerName: whitePlayerName, playerNameDialog: $orangePlayerNameDialog, otherPlayerNameDialog: $whitePlayerNameDialog)
-                         }
-                        
-                        if orangePlayerName.isEmpty {
-                            Text("Name")
-                                .textFieldPromptStyle(color: Color("OrangeManicera"))
-                            } //TextField prompt
-                        else if focus == .orange
-                            {
-                            suggestionScroll(playerName: $orangePlayerName, otherPlayerName: whitePlayerName, playerNameDialog: $orangePlayerNameDialog, otherPlayerNameDialog: $whitePlayerNameDialog, nameList: nameList, color: Color("OrangeFeedback"), wide: wide, tall: tall)
-                            } //show autosuggest scroll for orange player when orange player starts typing
-                    }
-                    .offset(x: -wide*0.06, y: -tall*0.25)
-                } // if getting names
                 
-                if (orangePlayerNameDialog == true || whitePlayerNameDialog == true) {
-                    Button((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? "Cancel" : "Save") {
-                        if (orangePlayerName.isEmpty || whitePlayerName.isEmpty) {
-                            archiveDialog = false //cancel
-                        } else {
-                            saveAndReset(save: true) // save
+                Button("Keep Game") {
+                textFieldsShown = true
+                focus = .orange
+                }// if tapped, show textFields, focus on orange one
+                .buttonStyle(GreenPill())
+                .offset(x: -wide*wideLeftFactor, y: tall*0.055)
+                .showView(!textFieldsShown)//Show if not getting games yet
+                
+                Spacer().showView(textFieldsShown)
+                
+                ZStack (alignment: .leading){
+                    TextField("", text: $orangePlayerName)
+                        .playerNameStyle(color: Color("OrangeManicera"), width: wide * 0.3)
+                        .focused($focus, equals: .orange)
+                        .onSubmit {
+                            checkForNamesAndSave(playerName: orangePlayerName, otherPlayerName: whitePlayerName)
                         }
-                    } //show cancel unless both names full - save otherwise
-                    .buttonStyle(SavePill())
-                    .background((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color.red : Color.blue)
-                    .foregroundColor((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color("WhiteManicera") : .white)
-                    .clipShape(Capsule())
-                    .offset(x: -wide*0.0, y: -tall*0.25)
-                } // if getting names
+                    
+                    Text("Name")
+                        .textFieldPromptStyle(color: Color("OrangeManicera"))
+                        .showView(orangePlayerName.isEmpty)
+                   
+                    suggestionScroll(playerName: $orangePlayerName, otherPlayerName: whitePlayerName, textFieldsShown: $textFieldsShown, nameList: nameList, color: Color("OrangeFeedback"), wide: wide, tall: tall)
+                        .showView(!orangePlayerName.isEmpty && focus == .orange) //show autosuggest scroll for orange player when orange player starts typing
+                }
+                .offset(y: -tall*0.25)
+                .showView(textFieldsShown)//show TextFields when getting names
                 
-                if (orangePlayerNameDialog == false && whitePlayerNameDialog == false) { // if not getting names yet
-                    Button("Discard") {//show discard button
+                Spacer()
+                    .showView(textFieldsShown && verticalSizeClass != .compact)
+                
+                Button((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? "Cancel" : "Save") {
+                    if (orangePlayerName.isEmpty || whitePlayerName.isEmpty) {
+                        clearLocalVariables()//cancel
+                    } else {
+                        saveAndOrReset(save: true) // save
+                    }
+                } //show cancel unless both names full - save otherwise
+                .buttonStyle(SavePill())
+                .background((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color.red : Color.blue)
+                .foregroundStyle((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color("WhiteManicera") : .white)
+                .clipShape(Capsule())
+                .offset(y: -tall*0.25)
+                .showView(textFieldsShown)// if getting names
+                
+                Button("Discard") {//show discard button
                         showingConfirmation = true
                     }
                     .buttonStyle(RedPill())
                     .offset(x: wide * wideRightFactor, y: tall*0.055)
+                    .showView(!textFieldsShown)
                     .alert("You Sure", isPresented: $showingConfirmation) {//double-check user wants to discard
                         Button("Yes, Discard", role: .destructive) {
-                            saveAndReset(save: false)
+                            saveAndOrReset(save: false)
                         }
                         Button("No. Cancel.", role: .cancel) { }
                     } message: { Text("Can't Undo") }
-                } else { //if getting names
-                    ZStack(alignment: .leading){
-                        TextField("", text: $whitePlayerName)
-                            .playerNameStyle(color: Color("WhiteScript"), width: wide * 0.3)
-                            .focused($focus, equals: .white)
-                            .onSubmit{
-                                checkForNamesAndSave(playerName: whitePlayerName, otherPlayerName: orangePlayerName, playerNameDialog: $whitePlayerNameDialog, otherPlayerNameDialog: $orangePlayerNameDialog)
-                            }
-                            
-                            
-                        if (whitePlayerName.isEmpty) {
-                            Text("Name")
-                                .textFieldPromptStyle(color: Color("WhiteScript"))//TextField prompt
-                        } else if focus == .white {
-                            suggestionScroll(playerName: $whitePlayerName, otherPlayerName: orangePlayerName, playerNameDialog: $orangePlayerNameDialog, otherPlayerNameDialog: $whitePlayerNameDialog, nameList: nameList, color: Color("WhiteFeedback"), wide: wide, tall: tall)
-                        } //show autosuggest scroll for white player when white player starts typing
-                    }
-                    .offset(x: wide*0.06, y: -tall*0.25)
+                
+                Spacer()
+                    .showView(textFieldsShown && verticalSizeClass != .compact)
+                
+                ZStack(alignment: .leading){
+                    TextField("", text: $whitePlayerName)
+                        .playerNameStyle(color: Color("WhiteScript"), width: wide * 0.3)
+                        .focused($focus, equals: .white)
+                        .onSubmit{
+                            checkForNamesAndSave(playerName: whitePlayerName, otherPlayerName: orangePlayerName)
+                        }
+                        
+                    
+                    Text("Name")
+                        .textFieldPromptStyle(color: Color("WhiteScript"))
+                        .showView(whitePlayerName.isEmpty)//TextField prompt
+                    
+                    suggestionScroll(playerName: $whitePlayerName, otherPlayerName: orangePlayerName, textFieldsShown: $textFieldsShown, nameList: nameList, color: Color("WhiteFeedback"), wide: wide, tall: tall)
+                        .showView(!whitePlayerName.isEmpty && focus == .white) //show autosuggest scroll for white player when white player starts typing
                 }
+                .offset(y: -tall*0.25)
+                .showView(textFieldsShown)
+                
+                Spacer().showView(textFieldsShown)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.black.opacity(0.7))
+            .background(.ultraThinMaterial)
+            .highPriorityGesture(DragGesture()) //prevent unwanted change of tab
             .onTapGesture{
-                if (whitePlayerNameDialog == false &&
-                    orangePlayerNameDialog == false) {archiveDialog = false}
+                if !textFieldsShown {archiveDialog = false} //cancel everything and go back to game if tap anywhere else but buttons
             }
         }
     }
     
-    func checkForNamesAndSave(playerName: String, otherPlayerName: String?, playerNameDialog: Binding<Bool>, otherPlayerNameDialog: Binding<Bool>) {
+    func checkForNamesAndSave(playerName: String, otherPlayerName: String?) {
         if otherPlayerName!.isEmpty {
-            playerNameDialog.wrappedValue = false
-            otherPlayerNameDialog.wrappedValue = true
             switchFocus(focus: focus)
-        }
-        else {
-            saveAndReset(save: true)
+        } else if playerName.isEmpty {
+            focus = focus.self
+        } else {
+            saveAndOrReset(save: true)
         }
     }
     
@@ -148,7 +153,7 @@ struct ArchiveDialogView: View {
         }
     }
     
-    func saveAndReset(save: Bool) {
+    func saveAndOrReset(save: Bool) {
         turns.newGame(currentBoxScore: currentBoxScore) // clear scoreboard
         newGameColorChange() //visual flash
         if save {
@@ -159,21 +164,29 @@ struct ArchiveDialogView: View {
                         secondRuns: currentBoxScore.secondRuns
             )
         } //save data to icloud
+        clearLocalVariables() //get rid of save screen
         currentBoxScore.clearBoxScore()
-        archiveDialog = false //get rid of save screen
     }
     
-    func suggestionScroll (playerName: Binding<String>, otherPlayerName: String?, playerNameDialog: Binding<Bool>, otherPlayerNameDialog: Binding<Bool>, nameList: [String?], color: Color, wide: CGFloat, tall: CGFloat) -> some View{
+    func clearLocalVariables() {
+        orangePlayerName = ""
+        whitePlayerName = ""
+        textFieldsShown = false
+        focus = .none
+        archiveDialog = false
+    }
+    
+    func suggestionScroll (playerName: Binding<String>, otherPlayerName: String?, textFieldsShown: Binding<Bool>, nameList: [String?], color: Color, wide: CGFloat, tall: CGFloat) -> some View{
         
         ScrollView(.vertical)  {ForEach(nameList.filter{ ($0?.lowercased() ?? "").hasPrefix(playerName.wrappedValue.lowercased()) }, id: \.self)
                 { name in
                     Button(name!) {playerName.wrappedValue = name!
-                        checkForNamesAndSave(playerName: name!, otherPlayerName: otherPlayerName, playerNameDialog: playerNameDialog, otherPlayerNameDialog: otherPlayerNameDialog)
+                        checkForNamesAndSave(playerName: name!, otherPlayerName: otherPlayerName)
                     }
                     .font(.largeTitle)
                     .lineLimit(1)
                     .frame(width: wide*0.3, alignment: .leading)
-                    .foregroundColor(color)
+                    .foregroundStyle(color)
                 }
             }
             .offset(y: tall * 0.60)
@@ -191,6 +204,7 @@ struct ArchiveDialogView: View {
             }
         })
     }
+    
     func fetchNames() -> [String?] {
         
         let descriptor = FetchDescriptor<PlayerStats>(sortBy: [SortDescriptor(\PlayerStats.name)])
@@ -208,7 +222,7 @@ struct ArchiveDialogView: View {
             // set the box score - date and names
             
             let boxScoreRecord = BoxScore(date: Date(), firstColor: firstColor!, firstPlayerName: firstColor == .orange ? orangePlayerName : whitePlayerName, firstRuns: firstRuns, secondPlayerName: firstColor == .white ? orangePlayerName : whitePlayerName, secondRuns: secondRuns)
-            
+ 
             modelContext.insert(boxScoreRecord)
             
             // Deal with Stats now...
@@ -297,41 +311,4 @@ struct ArchiveDialogView: View {
        } // player in database
     }
 
-}
-
-struct GreenPill: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.largeTitle)
-            .padding()
-            .background(Color("FeltGreen"))
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-    }
-}
-
-struct RedPill: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.largeTitle)
-            .padding()
-            .background(Color("InningRed"))
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-    }
-}
-
-struct SavePill: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.largeTitle)
-            .padding()
-            .frame(width: 200)
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-        }
 }

@@ -28,7 +28,7 @@ struct InningButton: View {
             
             Text("\(turns.inning)")
                 .font(.system(size: inningButtonSize*0.50))
-                .foregroundColor(newGameFlash ? Color("Undo") : Color("WhiteManicera"))
+                .foregroundStyle(newGameFlash ? Color("Undo") : Color("WhiteManicera"))
         }
         .gesture(LongPressGesture(minimumDuration: 1, maximumDistance: 10)
             .onEnded({_ in

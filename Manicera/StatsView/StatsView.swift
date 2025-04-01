@@ -14,7 +14,7 @@ struct statsView: View {
         VStack{
             Text("Individual Stats")
                 .font(Font.largeTitle.weight(.regular))
-                .foregroundColor(Color("WhiteFeedback"))
+                .foregroundStyle(Color("WhiteFeedback"))
                 .frame(maxWidth: .infinity, alignment:  .leading)
                 .padding(10)
             

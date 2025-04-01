@@ -16,7 +16,7 @@ struct chart: View {
     var body: some View {
         GroupBox (
             label: Text("\(player.name!) \(Image(systemName: "x.circle.fill"))")
-                .foregroundColor(UIDevice.current.userInterfaceIdiom == .pad ? .white : .black)
+                .foregroundStyle(UIDevice.current.userInterfaceIdiom == .pad ? .white : .black)
                 .onTapGesture {
                     presentationMode.wrappedValue.dismiss()
                 }//works on both, but necessary on fullScreen modal on iPad
@@ -41,7 +41,7 @@ struct chart: View {
                 .annotation(position: .trailing) {
                     Text("\(player.averages[entry], specifier: "%.3f")")
                         .font(.system(.headline))
-                        .foregroundColor(Color.white)
+                        .foregroundStyle(Color.white)
                         .padding(.horizontal, 10)
                         .background(Color.blue, in: RoundedRectangle(cornerRadius: 5))
                         .opacity(rawSelectedGame != nil && rawSelectedGame == entry ? 1 : 0)

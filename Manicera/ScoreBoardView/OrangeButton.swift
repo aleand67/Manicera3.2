@@ -39,10 +39,11 @@ struct OrangeButton: View {
             wasOrangeButtonUsed = true
         })
         {VStack{
-            (wasOrangeButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
+            Text(Image(systemName: "hand.tap"))
+                .showView(!wasOrangeButtonUsed)
             Text(wasOrangeButtonUsed ?  "" : "Orange Turn")}
                 .font(.system(size: bigButtonSize*0.02))
-                .foregroundColor(Color("OrangeScript"))
+                .foregroundStyle(Color("OrangeScript"))
                 .frame(width: bigButtonSize*0.22,
                        height: bigButtonSize*0.20)
                 .background(

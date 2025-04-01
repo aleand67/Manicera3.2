@@ -38,10 +38,11 @@ struct WhiteButton: View {
         })
         {
             VStack{
-                (wasWhiteButtonUsed ? Text("") : Text(Image(systemName: "hand.tap")))
+                Text(Image(systemName: "hand.tap"))
+                    .showView(!wasWhiteButtonUsed)
                 Text(wasWhiteButtonUsed ? "" : "White Turn")}
                 .font(.system(size: bigButtonSize*0.02))
-                .foregroundColor(Color("WhiteScript"))
+                .foregroundStyle(Color("WhiteScript"))
                 .frame(width: bigButtonSize*0.22,
                        height: bigButtonSize*0.20)
                 .background(

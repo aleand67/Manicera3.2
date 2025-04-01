@@ -27,11 +27,11 @@ struct scoreboardView: View {
     @AppStorage("wasSwipingUsed") var wasSwipingUsed = false
     
     private var orangeFeedbackColor: Color {
-        if orangeIsPressed == true && turns.player == .orange {return Color("OrangeFeedback")} else {return Color("OrangeManicera")}
+        orangeIsPressed == true && turns.player == .orange ? Color("OrangeFeedback") : Color("OrangeManicera")
     }
     
     private var whiteFeedbackColor: Color {
-        if whiteIsPressed == true && turns.player == .white {return Color("WhiteFeedback")} else {return Color("WhiteManicera")}
+        whiteIsPressed == true && turns.player == .white ? Color("WhiteFeedback") : Color("WhiteManicera")
     }
     
     private func colorChange() { //flash black when undoing carambola
@@ -70,12 +70,12 @@ struct scoreboardView: View {
                             
                             avgView(avg: turns.orangeAvg, tall: tall, wide: wide, color: Color("OrangeScript")) //show orange average
                        } //orange side
-                        if !scoreButtonUsed && turns.player == .orange {
-                            Text("Orange-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
-                            .foregroundColor(Color.white)
+                        Text("Orange-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
+                            .foregroundStyle(Color.white)
                             .font(.system(size: tall*0.03))
                             .multilineTextAlignment(.center)
-                            .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom) }//show score carambola instructions the first time
+                            .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom)
+                            .opacity(!scoreButtonUsed && turns.player == .orange ? 1 : 0) //show score carambola instructions the first time
                         
                         Spacer()
                         
@@ -115,13 +115,13 @@ struct scoreboardView: View {
                             
                             avgView(avg: turns.whiteAvg, tall: tall, wide: wide, color: Color("WhiteScript")) //show white average
                         } //white side
-                        if !scoreButtonUsed && turns.player == .white {
-                            Text("White-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
-                                .foregroundColor(Color.white)
-                                .font(.system(size: tall*0.03))
-                                .multilineTextAlignment(.center)
-                                .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom)
-                        } //show score carambola instructions the first time
+                        
+                        Text("White-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
+                            .foregroundStyle(Color.white)
+                            .font(.system(size: tall*0.03))
+                            .multilineTextAlignment(.center)
+                            .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom)
+                            .opacity(!scoreButtonUsed && turns.player == .white ? 1 : 0)//show score carambola instructions the first time
                         
                         Spacer()
                         
@@ -152,9 +152,9 @@ struct scoreboardView: View {
                 InningButton(bigButtonSize: wide, newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
                     .frame(height: tall*0.60, alignment: .bottom)
                 
-                if archiveDialog {
-                    ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
-                } //show save screen when game over
+
+                ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
+                    .opacity(archiveDialog ? 1 : 0)//show save screen when game over
                 
                 VStack{
                     Rectangle()
@@ -162,22 +162,19 @@ struct scoreboardView: View {
                         .frame(width: wide, height: tall * swipeFactor)
 
                     Spacer()
-                }//top draggable region to switch tabs
+                }.showView(!archiveDialog)//top draggable region to switch tabs unless archiveDialogView is on
 
-                if (!wasInningButtonUsed && turns.overallTurn > 0) {
-                    Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
-                        .padding(2)
-                        .foregroundColor(Color.black)
-                        .font(.system(size: tall*0.03, weight: .light))
-                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
-                        .multilineTextAlignment(.center)
-                        .frame(width: wide*0.80, height: tall*0.70, alignment: .bottom)
-                }//restart instructions first time
+                Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
+                    .padding(2)
+                    .foregroundStyle(Color.black)
+                    .font(.system(size: tall*0.03, weight: .light))
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
+                    .multilineTextAlignment(.center)
+                    .frame(width: wide*0.80, height: tall*0.70, alignment: .bottom)
+                    .opacity((!wasInningButtonUsed && turns.overallTurn > 0) ? 1 : 0)//restart instructions first time
                 
-                if wasSwipingUsed == false {
-                    
-                    swipingInstructions(tall: tall, wide: wide)//show swiping instructions the first time
-                }
+                swipingInstructions(tall: tall, wide: wide)
+                .showView(!wasSwipingUsed && !archiveDialog)//show swiping instructions if never used and not in archiving mode
             }
         }
     }
@@ -192,11 +189,9 @@ struct scoreboardView: View {
         HStack{
             Spacer()
             Text("\(score)")
-                .foregroundColor(newGameFlash ? Color("Undo") : color)
-            if turns.player == player {
-                Text(" +\(run)")
-                    .foregroundColor((buttonFlash ? Color("Undo") : color))
-            }
+                .foregroundStyle(newGameFlash ? Color("Undo") : color)
+            Text(" +\(run)").showView(turns.player == player)
+                .foregroundStyle((buttonFlash ? Color("Undo") : color))
         }
         .font(.system(size: tall*0.12))
         .background(
@@ -215,7 +210,7 @@ struct scoreboardView: View {
         Text("average \(avg, specifier: "%.3f")")
             .padding()
             .frame(height: tall*0.055, alignment: .center)
-            .foregroundColor(newGameFlash ? Color("Undo") : color)
+            .foregroundStyle(newGameFlash ? Color("Undo") : color)
             .font(.system(size: tall*0.04))
             .background(RoundedRectangle(cornerRadius: 10).strokeBorder(color))
             .padding(25)
@@ -235,7 +230,7 @@ struct scoreboardView: View {
                 Spacer()
             
                 Text("Swiping-Instructions \(Image(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))")
-                .font(horizontalSizeClass == .compact ? .system(size: tall * 0.05) : .system(size: tall * 0.03))
+                    .font(horizontalSizeClass == .compact ? .system(size: tall * 0.05) : .system(size: tall * 0.03))
                     .fontWeight(.light)
 
                 Spacer()
@@ -244,7 +239,7 @@ struct scoreboardView: View {
             
             }
             .padding()
-            .foregroundColor(Color.black)
+            .foregroundStyle(Color.black)
             .frame(width: horizontalSizeClass == .compact ? wide * 0.90 : wide * 0.98, height: tall*0.05)
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
             .offset(y: horizontalSizeClass == .compact ? -tall*0.46 : -tall*0.47)

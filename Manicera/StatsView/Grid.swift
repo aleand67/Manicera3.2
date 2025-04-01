@@ -188,7 +188,7 @@ struct headers: View {
                     averageLabel(labelOrder: $labelOrder)
                 } //Dynamic Column Header for Average
             }
-            .foregroundColor(Color.blue)
+            .foregroundStyle(Color.blue)
             .font(.title2)
             .padding(.bottom, 5)
             .background(Color.black)
@@ -222,9 +222,9 @@ struct gridRows: View {
                 Text("\((player.lastAverage), specifier: "%.3f")")
             }
             .font(.title3)
-            .foregroundColor(.gray)
+            .foregroundStyle(.gray)
             .padding(.horizontal)
-            .foregroundColor(Color.white)
+            .foregroundStyle(Color.white)
         }
     }
     
@@ -242,7 +242,7 @@ struct nameCell: View {
     var body: some View {
         Text("\(player.name!)")
             .lineLimit(1)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .contextMenu {
                 Button("Average Graph") {
                     showChart.toggle()
