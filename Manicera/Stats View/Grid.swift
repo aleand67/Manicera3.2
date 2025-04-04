@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 
+let columns = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 6)
+
 enum LabelOrder {
     case playerUp
     case playerDown
@@ -188,10 +190,10 @@ struct headers: View {
                     averageLabel(labelOrder: $labelOrder)
                 } //Dynamic Column Header for Average
             }
-            .foregroundStyle(Color.blue)
+            .foregroundStyle(.blue)
             .font(.title2)
             .padding(.bottom, 5)
-            .background(Color.black)
+            .background(.black)
         }
     }
 }
@@ -224,7 +226,7 @@ struct gridRows: View {
             .font(.title3)
             .foregroundStyle(.gray)
             .padding(.horizontal)
-            .foregroundStyle(Color.white)
+            .foregroundStyle(.white)
         }
     }
     
@@ -256,7 +258,7 @@ struct nameCell: View {
             }
             .sheet(isPresented: $showChart) {
                 chart(player: player)
-                    .presentationBackground(Color.black)
+                    .presentationBackground(.black)
             }
             .alert("Are you sure you want to delete this player?", isPresented: $showAlert) {
                 Button("yes, delete this player", role: .destructive) {
@@ -272,6 +274,6 @@ struct nameCell: View {
 #Preview {
     @Previewable @State var sortOrder = SortDescriptor(\PlayerStats.wins)
     grid()
-        .background(Color.black)
+        .background(.black)
         .modelContainer(statsPreviewContainer)
 }

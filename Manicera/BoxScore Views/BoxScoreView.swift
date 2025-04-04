@@ -22,30 +22,32 @@ private func color2(first: playerId?) -> Color {
     return (first == .orange) ? Color("WhiteFeedback") : Color("OrangeFeedback")
 }
 
-private let star = Image(systemName: "star")
+let star = Image(systemName: "star")
 
 struct boxScoreView: View {
     @Query(sort: \BoxScore.date, order: .reverse) var boxScores: [BoxScore]
     @Environment(CurrentBoxScore.self) var currentBoxScore
     @Environment(\.modelContext) var modelContext
     @State var showArmaggedonWarning: Bool = false
+    @AppStorage("boxScoreOnBoarding") var boxScoreOnBoarding = true
+    
     var body: some View {
         ScrollView(.vertical) {
             Group {
                 Text("Current game")
                     .font(Font.largeTitle.weight(.regular))
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment:  .leading)
                     .padding()
                 
-                Divider().background(Color.white)
+                Divider().background(.white)
                 IndividualBoxScoreView(game: currentBoxScore)
             }
             .showView(currentBoxScore.firstRuns.count > 0)
             
             Text("Past games")
                 .font(Font.largeTitle.weight(.regular))
-                .foregroundStyle(Color.white)
+                .foregroundStyle(.white)
                 .frame(maxWidth: .infinity, alignment:  .leading)
                 .padding()
             
@@ -81,7 +83,11 @@ struct boxScoreView: View {
             }
             .showView(boxScores.isEmpty == false)
         }
-        .background(Color.black)
+        .background(.black)
+        .overlay(
+            BoxScoreOnBoarding()
+            .showView(boxScoreOnBoarding)
+            )
     }
 }
 
@@ -121,7 +127,7 @@ private func headerView(game: CurrentBoxScore,  firstPlayerName: String?, second
                 .foregroundStyle(color2(first: game.firstColor))
             }
             .frame(width:120)
-            .background(Color.black)
+            .background(.black)
         } //if old game
         Group{
             Text("Total")
@@ -133,8 +139,8 @@ private func headerView(game: CurrentBoxScore,  firstPlayerName: String?, second
                 .frame(width:60)
                 .foregroundStyle(color2(first: game.firstColor))
         }
-        .background(Color.black)
-        .foregroundStyle(Color.white)
+        .background(.black)
+        .foregroundStyle(.white)
 
         Group{
             Text("Average")
@@ -147,8 +153,8 @@ private func headerView(game: CurrentBoxScore,  firstPlayerName: String?, second
                 .foregroundStyle(color2(first: game.firstColor))
         }
         .padding(5)
-        .background(Color.black)
-        .foregroundStyle(Color.white)
+        .background(.black)
+        .foregroundStyle(.white)
         
     }
 }
@@ -167,7 +173,7 @@ struct IndividualBoxScoreView: View {
                 Text(date!, style: .date).fontWeight(.light)
                 Text(date!, style: .time).fontWeight(.light)
             }
-            .foregroundStyle(Color.white)
+            .foregroundStyle(.white)
             .frame(maxWidth: .infinity, alignment:  .leading)
             .padding()
         }
@@ -190,20 +196,20 @@ struct IndividualBoxScoreView: View {
                     }
                 }
             }
-            .foregroundStyle(Color.white)
+            .foregroundStyle(.white)
             .frame(height:90)
         }
         .padding(.bottom, 70)
 
         Divider()
-            .background(Color.white)
+            .background(.white)
         }
-        .background(Color.black)
+        .background(.black)
     }
 }
 
 #Preview {
-    boxScoreView()
+    boxScoreView(boxScoreOnBoarding: true)
         .modelContainer(boxScorePreviewContainer)
         .environmentObject(CurrentBoxScore.example)
 }

@@ -29,6 +29,9 @@ struct ArchiveDialogView: View {
     @State private var whitePlayerName: String = ""
     @Binding var newGameFlash: Bool
     @Binding var archiveDialog: Bool
+    @State private var offset: CGFloat = 1200
+    
+    @AppStorage("tabsAvailable") var tabsAvailable = false
     
     var body: some View {
         
@@ -39,20 +42,19 @@ struct ArchiveDialogView: View {
                 let tall = geometry.size.height
                 let wide = geometry.size.width
                 
-                let wideLeftFactor = verticalSizeClass == .compact ? 0.105 : 0.155 //fine tuning placement Keep Game button
+                let wideLeftFactor = verticalSizeClass == .compact ? 0.105 : 0.157 //fine tuning placement Keep Game button
                 
-                let wideRightFactor = verticalSizeClass == .compact ? 0.1275 : 0.175 //fine tuning placement Discard Game button
-                               
+                let wideRightFactor = verticalSizeClass == .compact ? 0.1275 : 0.165 //fine tuning placement Discard Game button
+                  
+                Spacer()
                 
                 Button("Keep Game") {
-                textFieldsShown = true
-                focus = .orange
-                }// if tapped, show textFields, focus on orange one
-                .buttonStyle(GreenPill())
-                .offset(x: -wide*wideLeftFactor, y: tall*0.055)
-                .showView(!textFieldsShown)//Show if not getting games yet
-                
-                Spacer().showView(textFieldsShown)
+                    textFieldsShown = true
+                    focus = .orange
+                    }// if tapped, show textFields, focus on orange one
+                    .buttonStyle(AnimatePill(color: Color("FeltGreen")))
+                    .offset(x: -wide*wideLeftFactor, y: tall*0.055)
+                    .showView(!textFieldsShown)//Show if not getting games yet
                 
                 ZStack (alignment: .leading){
                     TextField("", text: $orangePlayerName)
@@ -70,37 +72,28 @@ struct ArchiveDialogView: View {
                         .showView(!orangePlayerName.isEmpty && focus == .orange) //show autosuggest scroll for orange player when orange player starts typing
                 }
                 .offset(y: -tall*0.25)
-                .showView(textFieldsShown)//show TextFields when getting names
+                .showView(textFieldsShown)//show left TextField when getting names
                 
                 Spacer()
                     .showView(textFieldsShown && verticalSizeClass != .compact)
                 
-                Button((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? "Cancel" : "Save") {
-                    if (orangePlayerName.isEmpty || whitePlayerName.isEmpty) {
-                        clearLocalVariables()//cancel
-                    } else {
+                Button("Cancel") {
+                    orangePlayerName = ""
+                    whitePlayerName = ""
+                    textFieldsShown = false
+                }
+                .buttonStyle(AnimatePill(color: .red))
+                .offset(y: -tall*0.25)
+                .showView(textFieldsShown && (orangePlayerName.isEmpty || whitePlayerName.isEmpty))// if getting names but not both full
+                
+                Button("Save") {
                         saveAndOrReset(save: true) // save
                     }
-                } //show cancel unless both names full - save otherwise
-                .buttonStyle(SavePill())
-                .background((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color.red : Color.blue)
-                .foregroundStyle((orangePlayerName.isEmpty || whitePlayerName.isEmpty) ? Color("WhiteManicera") : .white)
-                .clipShape(Capsule())
+                .buttonStyle(AnimatePill(color: .blue))
                 .offset(y: -tall*0.25)
-                .showView(textFieldsShown)// if getting names
-                
-                Button("Discard") {//show discard button
-                        showingConfirmation = true
-                    }
-                    .buttonStyle(RedPill())
-                    .offset(x: wide * wideRightFactor, y: tall*0.055)
-                    .showView(!textFieldsShown)
-                    .alert("You Sure", isPresented: $showingConfirmation) {//double-check user wants to discard
-                        Button("Yes, Discard", role: .destructive) {
-                            saveAndOrReset(save: false)
-                        }
-                        Button("No. Cancel.", role: .cancel) { }
-                    } message: { Text("Can't Undo") }
+                .showView(textFieldsShown && !orangePlayerName.isEmpty && !whitePlayerName.isEmpty)// if getting names and both full
+                    
+               
                 
                 Spacer()
                     .showView(textFieldsShown && verticalSizeClass != .compact)
@@ -122,15 +115,36 @@ struct ArchiveDialogView: View {
                         .showView(!whitePlayerName.isEmpty && focus == .white) //show autosuggest scroll for white player when white player starts typing
                 }
                 .offset(y: -tall*0.25)
-                .showView(textFieldsShown)
+                .showView(textFieldsShown)// show right TextField
                 
-                Spacer().showView(textFieldsShown)
+                Button("Discard") {//show discard button
+                        showingConfirmation = true
+                    }
+                    .buttonStyle(AnimatePill(color: Color("InningRed")))
+                    .offset(x: wide * wideRightFactor, y: tall*0.055)
+                    .showView(!textFieldsShown)
+                    .alert("You Sure", isPresented: $showingConfirmation) {//double-check user wants to discard
+                        Button("Yes, Discard", role: .destructive) {
+                            saveAndOrReset(save: false)
+                            close()
+                        }
+                        Button("No. Cancel.", role: .cancel) { }
+                    } message: { Text("Can't Undo") }
+                
+                Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.ultraThinMaterial)
-            .highPriorityGesture(DragGesture()) //prevent unwanted change of tab
             .onTapGesture{
-                if !textFieldsShown {archiveDialog = false} //cancel everything and go back to game if tap anywhere else but buttons
+                if !textFieldsShown {
+                    close()
+                } //cancel everything and go back to game if tap anywhere else but buttons
+            }
+            .offset(y: offset)
+            .onAppear {
+                withAnimation(.spring()) {
+                    offset = 0
+                }
             }
         }
     }
@@ -163,17 +177,11 @@ struct ArchiveDialogView: View {
                         firstRuns: currentBoxScore.firstRuns,
                         secondRuns: currentBoxScore.secondRuns
             )
+            
+            tabsAvailable = true //turn tabs on
         } //save data to icloud
-        clearLocalVariables() //get rid of save screen
+        close() //get rid of save screen
         currentBoxScore.clearBoxScore()
-    }
-    
-    func clearLocalVariables() {
-        orangePlayerName = ""
-        whitePlayerName = ""
-        textFieldsShown = false
-        focus = .none
-        archiveDialog = false
     }
     
     func suggestionScroll (playerName: Binding<String>, otherPlayerName: String?, textFieldsShown: Binding<Bool>, nameList: [String?], color: Color, wide: CGFloat, tall: CGFloat) -> some View{
@@ -186,7 +194,7 @@ struct ArchiveDialogView: View {
                     .font(.largeTitle)
                     .lineLimit(1)
                     .frame(width: wide*0.3, alignment: .leading)
-                    .foregroundStyle(color)
+                    .foregroundStyle(verticalSizeClass == .compact ? .black : color)
                 }
             }
             .offset(y: tall * 0.60)
@@ -310,5 +318,24 @@ struct ArchiveDialogView: View {
            updatePlayerStats(playerStats: playerStats[0], playerRuns: playerRuns, otherPlayerRuns: otherPlayerRuns, practiceGame: practiceGame)
        } // player in database
     }
+    
+    func close() {
+        withAnimation(.spring()) {
+            offset = 1200
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            orangePlayerName = ""
+            whitePlayerName = ""
+            textFieldsShown = false
+            focus = .none
+            archiveDialog = false
+        } //clean up everything and dismiss archive view
+    }
+}
 
+#Preview {
+    @Previewable @State var archiveDialog: Bool = true
+    @Previewable @State var newGameFlash: Bool = false
+    ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
+        .modelContainer(statsPreviewContainer)
 }

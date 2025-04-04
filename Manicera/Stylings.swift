@@ -20,7 +20,7 @@ extension View {
 extension Text {
     func boldHighRun(run: Int, max: Int?) -> some View {
         return self
-            .fontWeight( (run == max! && run > 2) ? .heavy : .regular)
+            .fontWeight( (run == max ?? 100 && run > 2) ? .heavy : .regular)
             .frame(width:35)
     }
 }
@@ -29,7 +29,7 @@ extension Text {
     func textFieldPromptStyle(_ font: Font = .largeTitle, color: Color) -> some View {
         return self
                 .font(font)
-                .foregroundStyle(color.opacity(0.8))
+                .foregroundStyle(.opacity(0.8))
                 .allowsHitTesting(false)
     }
 }
@@ -46,39 +46,16 @@ extension TextField {
     }
 }
 
-struct GreenPill: ButtonStyle {
+struct AnimatePill: ButtonStyle {
+    @State var color: Color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.largeTitle)
-            .padding()
-            .background(Color("FeltGreen"))
+            .padding(EdgeInsets(top: 16, leading: 32, bottom: 16, trailing: 32))
+            .background(color)
             .foregroundStyle(.white)
             .clipShape(Capsule())
             .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
     }
-}
-
-struct RedPill: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.largeTitle)
-            .padding()
-            .background(Color("InningRed"))
-            .foregroundStyle(.white)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-    }
-}
-
-struct SavePill: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.largeTitle)
-            .padding()
-            .frame(width: 200)
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-        }
 }

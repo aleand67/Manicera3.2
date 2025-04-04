@@ -41,9 +41,9 @@ struct chart: View {
                 .annotation(position: .trailing) {
                     Text("\(player.averages[entry], specifier: "%.3f")")
                         .font(.system(.headline))
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(.white)
                         .padding(.horizontal, 10)
-                        .background(Color.blue, in: RoundedRectangle(cornerRadius: 5))
+                        .background(.blue, in: RoundedRectangle(cornerRadius: 5))
                         .opacity(rawSelectedGame != nil && rawSelectedGame == entry ? 1 : 0)
                                     }
             }
@@ -52,14 +52,14 @@ struct chart: View {
         .chartXAxis(.hidden)
         .chartYAxis {AxisMarks(values: .automatic) {
             AxisValueLabel()
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(.gray)
             AxisGridLine()
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(.gray)
         }
         }
         .chartYScale(domain: (player.averages.min() ?? 0)...(player.averages.max() ?? 2))
         .aspectRatio(3, contentMode: .fit)
-        .background(Color.white)
+        .background(.white)
         }
     }
 }

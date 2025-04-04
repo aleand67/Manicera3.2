@@ -20,11 +20,12 @@ struct scoreboardView: View {
     @GestureState private var whiteIsPressed = false
     @State private var buttonFlash: Bool = false
     @State private var newGameFlash: Bool = false
-    @State private var archiveDialog: Bool = false
+    @Binding var archiveDialog: Bool
     
     @AppStorage("scoreButtonUsed") var scoreButtonUsed = false
     @AppStorage("wasInningButtonUsed") var wasInningButtonUsed = false
     @AppStorage("wasSwipingUsed") var wasSwipingUsed = false
+    @AppStorage("tabsAvailable") var tabsAvailable: Bool = false
     
     private var orangeFeedbackColor: Color {
         orangeIsPressed == true && turns.player == .orange ? Color("OrangeFeedback") : Color("OrangeManicera")
@@ -65,17 +66,18 @@ struct scoreboardView: View {
                             Spacer()
                             
                             OrangeButton(bigButtonSize: wide)
+                                .overlay(
+                                    Text("Orange-Point \(Image(systemName:"hand.point.up.left")) \(Image(systemName:"hand.tap"))")
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                        .opacity(!scoreButtonUsed && turns.player == .orange ? 1 : 0)
+                                )//show score carambola instructions the first time
                                 
                             Spacer()
                             
                             avgView(avg: turns.orangeAvg, tall: tall, wide: wide, color: Color("OrangeScript")) //show orange average
                        } //orange side
-                        Text("Orange-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
-                            .foregroundStyle(Color.white)
-                            .font(.system(size: tall*0.03))
-                            .multilineTextAlignment(.center)
-                            .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom)
-                            .opacity(!scoreButtonUsed && turns.player == .orange ? 1 : 0) //show score carambola instructions the first time
+                        
                         
                         Spacer()
                         
@@ -97,8 +99,8 @@ struct scoreboardView: View {
                                         turns.notCarambola(data: currentBoxScore)
                                         colorChange()
                                     }
-                                })
-                        )//revert orange carambola
+                                })//revert orange carambola
+                        )
                     )
                     
                     ZStack{
@@ -109,19 +111,18 @@ struct scoreboardView: View {
                             Spacer()
                             
                             WhiteButton(bigButtonSize: wide)
+                                .overlay(
+                                    Text("White-Point \(Image(systemName:"hand.point.up.left")) \(Image(systemName:"hand.tap"))")
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                        .opacity(!scoreButtonUsed && turns.player == .white ? 1 : 0)
+                                )//show score carambola instructions the first time
                                 
                             Spacer()
                             
                             
                             avgView(avg: turns.whiteAvg, tall: tall, wide: wide, color: Color("WhiteScript")) //show white average
                         } //white side
-                        
-                        Text("White-Point \(Image(systemName:"hand.tap")) \(Image(systemName:"hand.tap"))")
-                            .foregroundStyle(Color.white)
-                            .font(.system(size: tall*0.03))
-                            .multilineTextAlignment(.center)
-                            .frame(width: wide*0.22, height: tall*0.20, alignment: .bottom)
-                            .opacity(!scoreButtonUsed && turns.player == .white ? 1 : 0)//show score carambola instructions the first time
                         
                         Spacer()
                         
@@ -136,45 +137,47 @@ struct scoreboardView: View {
                             }
                         }//score white carambola
                         .simultaneously(with: LongPressGesture(minimumDuration: 1, maximumDistance: 10)
-                        .updating($whiteIsPressed) { value, state, _ in state = value
-                        }//highlight long press
-                        .onEnded({_ in
+                            .updating($whiteIsPressed) { value, state, _ in state = value
+                            }//highlight long press
+                            .onEnded({_ in
                                 if turns.player == .white {
                                     turns.notCarambola(data: currentBoxScore)
                                     colorChange()
                                 }
-                            })
-                    )//revert white carambola
+                            })//revert white carambola
+                        )
                     )
                 }
-                .background(Color.black)
+                .background(.black)
 
                 InningButton(bigButtonSize: wide, newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
                     .frame(height: tall*0.60, alignment: .bottom)
                 
-
                 ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
-                    .opacity(archiveDialog ? 1 : 0)//show save screen when game over
+                    .showView(archiveDialog)//show save screen when game over
+                    .scrollDisabled(true)//and disable tabs during archiving dialog
                 
                 VStack{
                     Rectangle()
                         .fill(.white.opacity(0.0001))
                         .frame(width: wide, height: tall * swipeFactor)
+                        .overlay(
+                            swipingInstructions(tall: tall * swipeFactor, wide: wide)
+                                .showView(tabsAvailable && !wasSwipingUsed && !archiveDialog)
+                        )//show swiping instructions if never used and not in archiving mode
 
                     Spacer()
-                }.showView(!archiveDialog)//top draggable region to switch tabs unless archiveDialogView is on
+                }
+                .showView(!archiveDialog && tabsAvailable)//top draggable region to switch tabs once other Tabs are available and unless archiveDialogView is on
 
                 Text ("Restart-Instructions \(Image(systemName:"hand.tap"))")
                     .padding(2)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(.black)
                     .font(.system(size: tall*0.03, weight: .light))
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
                     .multilineTextAlignment(.center)
                     .frame(width: wide*0.80, height: tall*0.70, alignment: .bottom)
                     .opacity((!wasInningButtonUsed && turns.overallTurn > 0) ? 1 : 0)//restart instructions first time
-                
-                swipingInstructions(tall: tall, wide: wide)
-                .showView(!wasSwipingUsed && !archiveDialog)//show swiping instructions if never used and not in archiving mode
             }
         }
     }
@@ -216,44 +219,32 @@ struct scoreboardView: View {
             .padding(25)
     }
     
-    private func swipeHandText(tall: CGFloat) -> some View {
-        Text(Image(systemName: "hand.draw"))
-            .font(.system(size: horizontalSizeClass == .compact ? tall * 0.05 : tall * 0.03))
-            .fontWeight(.light)
-    }//swipe hand SFSymbol for first run swiping instructions
-    
     private func swipingInstructions(tall: CGFloat, wide: CGFloat) -> some View {
         HStack{
-
-                swipeHandText(tall: tall)
-
-                Spacer()
-            
-                Text("Swiping-Instructions \(Image(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))")
-                    .font(horizontalSizeClass == .compact ? .system(size: tall * 0.05) : .system(size: tall * 0.03))
-                    .fontWeight(.light)
-
-                Spacer()
-
-                swipeHandText(tall: tall)
+            Text(Image(systemName: "hand.draw"))
+            Spacer()
+            Text("Swiping-Instructions \(Image(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))")
+            Spacer()
+            Text(Image(systemName: "hand.draw"))
             
             }
-            .padding()
-            .foregroundStyle(Color.black)
-            .frame(width: horizontalSizeClass == .compact ? wide * 0.90 : wide * 0.98, height: tall*0.05)
+            .font(.largeTitle)
+            .fontWeight(.light)
+            .padding(20)
+            .foregroundStyle(.black)
+            .frame(width: wide * 0.9, height: tall * 0.9)
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
-            .offset(y: horizontalSizeClass == .compact ? -tall*0.46 : -tall*0.47)
-
+            .offset(y: 20)
     }
 
 }
 
-struct scoreBoardView_Previews: PreviewProvider {
-    static let turns = TurnsModel()
-    static let currentBoxScore = CurrentBoxScore()
-    static var previews: some View {
-        scoreboardView()
+#Preview {
+    @Previewable @State var archiveDialog: Bool = false
+    let turns = TurnsModel()
+    let currentBoxScore = CurrentBoxScore()
+
+    scoreboardView(archiveDialog: $archiveDialog, wasSwipingUsed: false, tabsAvailable: true)
             .environmentObject(turns)
             .environmentObject(currentBoxScore)
-    }
 }

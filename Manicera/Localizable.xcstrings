@@ -10,8 +10,201 @@
     " +%lld" : {
       "shouldTranslate" : false
     },
-    "-" : {
-      "shouldTranslate" : false
+    " to change order." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " para reorganizar la tabla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " pour réorganiser."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "para reordenar a tabela."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " yeniden sıralamak için."
+          }
+        }
+      }
+    },
+    "–" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        }
+      }
+    },
+    "***Long Tap*** %@ on **players** for graphs and more options." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Presione 1 seg*** %@ sobre los **jugadores** para gráficas y más opciones."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Tappez 1 sec*** %@ sur les **joueurs** pour graphiques et d’autres options."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Pressione 1 seg*** %@ sobre os **jogadores** para gráficos e mais opções."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grafikler ve daha fazla seçenek için **oyunculara** ***Uzun Dokunma*** %@ tuşuna basın."
+          }
+        }
+      }
+    },
+    "***Swipe left*** %@ to return to the scoreboard." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Deslice*** %@ hacia la iaquierda para regresar al tablero marcador."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Glissez à gauche*** %@ pour retourner au compteur."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Deslize*** %@ para a esquerda para voltar ao marcador."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Sola kaydırın*** %@ skor tablosuna geri dönmek için."
+          }
+        }
+      }
+    },
+    "***Tap*** %@ on " : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Presione*** %@ sobre los "
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Tappez*** %@ sur les "
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Toque*** %@ nos "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Dokunun** %@ "
+          }
+        }
+      }
+    },
+    "**columns headers**" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**encabezados**"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**en-têtes de colonnes**"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**cabeçalhos de coluna**"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**sütun başlıklarındaki**"
+          }
+        }
+      }
+    },
+    "**Swipe right** %@ to return to scoreboard." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Deslice*** %@ hacia la derecha para regresar al tablero marcador."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Glissez à droite*** %@ pour retourner au compteur."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Deslize*** %@ para a direita para voltar ao marcador."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "***Sağa kaydırın*** %@ skor tablosuna geri dönmek için."
+          }
+        }
+      }
     },
     "%.3f" : {
       "shouldTranslate" : false
@@ -267,7 +460,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İptal."
+            "value" : "İptal"
           }
         }
       }
@@ -439,6 +632,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oyunlar"
+          }
+        }
+      }
+    },
+    "Got it!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it!"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Listo!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J’ai compris!"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anladım!"
           }
         }
       }
@@ -642,7 +869,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Data."
+            "value" : "No Data"
           }
         }
       }
@@ -749,9 +976,6 @@
         }
       }
     },
-    "Onboarding, bitches!!!!" : {
-
-    },
     "Orange Turn" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -793,25 +1017,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ anywhere in the orange half to add a point. (Long %@ to undo)"
+            "value" : "Tap %@ anywhere in the orange half to add a point. (Long tap %@ to undo)"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ la mitad naranja para sumar una carambola. (%@ 1 seg para anular.) "
+            "value" : "Presione %@ la mitad naranja para sumar una carambola. (Presione %@ 1 seg para anular.) "
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ la moitié orange pour additioner un point (%@ 1 sec pour annuler.)"
+            "value" : "Tappez %@ la moitié orange pour additioner un point (tappez %@ 1 sec pour annuler.)"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ metade laranja para ganhar un ponto (Para desfazer %@ 1 seg.)"
+            "value" : "Toque %@ metade laranja para ganhar un ponto (Para desfazer toque %@ 1 seg.)"
           }
         },
         "tr" : {
@@ -949,7 +1173,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 1 seg botão vermelho para reiniciar o jogo"
+            "value" : "Toque %@ 1 seg botão vermelho para reiniciar o jogo"
           }
         },
         "tr" : {
@@ -1131,6 +1355,62 @@
         }
       }
     },
+    "Welcome to the Boxscore Page" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenidos a la Página de Archivos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenus à la Page des Récords de Matchs."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bem-vindos à Página de Ficheiros"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arşiv Sayfasına Hoş Geldiniz"
+          }
+        }
+      }
+    },
+    "Welcome to the Stats Page" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenidos a la Página de Estadísticas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenus à la Page des Statistiques."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bem-vindos à Página de Estadísticas"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İstatistik Sayfasına Hoş Geldiniz"
+          }
+        }
+      }
+    },
     "White Turn" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1172,31 +1452,59 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ anywhere in the white half to add a point. (Long %@ to undo)"
+            "value" : "Tap %@ anywhere in the white half to add a point. (Long tap %@ to undo)"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ la mitad blanca para sumar una carambola. (%@ 1 seg para anular.)"
+            "value" : "Presione %@ la mitad blanca para sumar una carambola. (Presione %@ 1 seg para anular.)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ la moitié blanche pour additioner un point (%@ 1 sec pour annuler)"
+            "value" : "Tappez %@ la moitié blanche pour additioner un point (tappez %@ 1 sec pour annuler)"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ metade branca para ganhar un ponto (Para desfazer %@ 1 seg.)"
+            "value" : "Toque %@ metade branca para ganhar un ponto (Para desfazer %@ 1 seg.)"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sayı eklemek için beyaz tarafa %@ (Iptal için 1 saniye %@.)"
+          }
+        }
+      }
+    },
+    "Winners are marked with a %@, and long runs are **bold**." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los ganadores se anotan con %@, y las corridas **en negritas**."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les gagnants sont marqués avec %@, et les séries plus longues en **gras**"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os ganadores anotam-se com %@, e as series mais longas **en negritas**."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kazananlar %@ işaretiyle, uzun koşular ise **kalın** olarak belirtilmiştir."
           }
         }
       }
@@ -1333,6 +1641,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu oyuncuyu elemek istediğinizden emin misiniz?"
+          }
+        }
+      }
+    },
+    "You'll find all old boxscores here as well as the current one." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acá vas a encontrar los registros de partidas anteriores, además del registro de la partida en curso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous trouverais ici les récords des matchs finis ici."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aqui encontrará todos os registos dos jogos anteriores e também do atual."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Burada hem önceki oyunlardan hem de mevcut oyundan kayıtları bulabilirsiniz."
           }
         }
       }
