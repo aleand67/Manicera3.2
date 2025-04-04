@@ -36,22 +36,24 @@ struct WhiteButton: View {
             
             wasWhiteButtonUsed = true
         })
-        {
-            VStack{
-                Text(Image(systemName: "hand.tap"))
-                    .showView(!wasWhiteButtonUsed)
-                Text(wasWhiteButtonUsed ? "" : "White Turn")}
-                .font(.system(size: bigButtonSize*0.02))
-                .foregroundStyle(Color("WhiteScript"))
-                .frame(width: bigButtonSize*0.22,
-                       height: bigButtonSize*0.20)
-                .background(
-                    Circle()
-                        .strokeBorder(Color("WhiteScript"), lineWidth: 3)
-                        .background(Circle().fill( turns.player == .white ? Color("WhiteScript") : Color("WhiteManicera")))
-                        .frame(width: bigButtonSize*0.27,
-                               height: bigButtonSize*0.27)
-                )
+        {VStack{
+            Text(wasWhiteButtonUsed ? "" : "\(Image(systemName: "hand.point.up.left"))")
+            Text(wasWhiteButtonUsed ? "" : "White Turn")}
+            .font(.title)
+            .foregroundStyle(Color("WhiteScript"))
+            .frame(
+                width: bigButtonSize*0.22,
+                height: bigButtonSize*0.20
+            )//this is needed to increase button tappable size to whole Circle
+            .background(
+                Circle()
+                    .strokeBorder(Color("WhiteScript"), lineWidth: 3)
+                    .background(Circle().fill( turns.player == .white ? Color("WhiteScript") : Color("WhiteManicera")))
+                    .frame(
+                        width: bigButtonSize*0.27,
+                        height: bigButtonSize*0.27
+                        )
+            )
         }
         .disabled(turns.player == .white)
     }

@@ -11,9 +11,11 @@ import SwiftData
 struct ContentView: View {
     
     @State private var selectedTab = "Middle"
-    @State private var hideStatusBar = true
+    //@State private var hideStatusBar = true
+    @State var archiveDialog: Bool = false
     
     @AppStorage("wasSwipingUsed") var wasSwipingUsed: Bool = false
+    @AppStorage("tabsAvailable") var tabsAvailable: Bool = false
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -21,22 +23,24 @@ struct ContentView: View {
             statsView()
                 .tabItem{Image(systemName:"number")}
                 .tag("Left")
-                .onAppear{hideStatusBar = false}
+                .showView(!archiveDialog) // hack so that you can't swipe when saving games
+                //.onAppear{hideStatusBar = false} //this doesn't work consistently
             
-            scoreboardView()
+            scoreboardView(archiveDialog: $archiveDialog)
                 .tabItem{Image(systemName:"timelapse")}
                 .tag("Middle")
-                .onAppear{hideStatusBar = true}
+                //.onAppear{hideStatusBar = true} //this doesn't work consistently
             
             boxScoreView()
                 .tabItem{Image(systemName:"table")}
                 .tag("Right")
-                .onAppear{hideStatusBar = false}
+                .showView(!archiveDialog) // hack so that you can't swipe when saving games
+                //.onAppear{hideStatusBar = false} //this doesn't work consistently
             
         }
-        .tabViewStyle(.page(indexDisplayMode: .always)) //sets indicator/control of tabs at bottom
+        .tabViewStyle(.page(indexDisplayMode: tabsAvailable && !archiveDialog ? .always : .never)) //sets indicator/control of tabs at bottom
         .indexViewStyle(.page(backgroundDisplayMode: .always)) //puts clipped shape around indicator/control
-        .statusBar(hidden: hideStatusBar)
+        .statusBar(hidden: true) //because it doesn't work too well 
         .ignoresSafeArea()
         .onChange(of: selectedTab) {
             wasSwipingUsed = true

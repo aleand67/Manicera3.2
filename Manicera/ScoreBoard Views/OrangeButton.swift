@@ -39,20 +39,23 @@ struct OrangeButton: View {
             wasOrangeButtonUsed = true
         })
         {VStack{
-            Text(Image(systemName: "hand.tap"))
-                .showView(!wasOrangeButtonUsed)
+            Text(wasOrangeButtonUsed ?  "" : "\(Image(systemName: "hand.point.up.left"))")
             Text(wasOrangeButtonUsed ?  "" : "Orange Turn")}
-                .font(.system(size: bigButtonSize*0.02))
-                .foregroundStyle(Color("OrangeScript"))
-                .frame(width: bigButtonSize*0.22,
-                       height: bigButtonSize*0.20)
-                .background(
-                    Circle()
-                        .strokeBorder(Color("OrangeScript"), lineWidth: 3)
-                        .background(Circle().fill( turns.player == .orange ? Color("OrangeScript") : Color("OrangeManicera")))
-                        .frame(width: bigButtonSize*0.27,
-                               height: bigButtonSize*0.27)
-                )
+            .font(.title)
+            .foregroundStyle(Color("OrangeScript"))
+            .frame(
+                width: bigButtonSize*0.22,
+                height: bigButtonSize*0.20
+            )//this is needed to increase button tappable size to whole Circle
+            .background(
+                Circle()
+                    .strokeBorder(Color("OrangeScript"), lineWidth: 3)
+                    .background(Circle().fill( turns.player == .orange ? Color("OrangeScript") : Color("OrangeManicera")))
+                    .frame(
+                        width: bigButtonSize*0.27,
+                        height: bigButtonSize*0.27
+                    )
+            )
             
         }
         .disabled(turns.player == .orange)
