@@ -40,7 +40,7 @@ struct ContentView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: tabsAvailable && !archiveDialog ? .always : .never)) //sets indicator/control of tabs at bottom
         .indexViewStyle(.page(backgroundDisplayMode: .always)) //puts clipped shape around indicator/control
-        .statusBar(hidden: hideStatusBar)
+        .statusBar(hidden: true) //because it doesn't work too well 
         .ignoresSafeArea()
         .onChange(of: selectedTab) {
             wasSwipingUsed = true
