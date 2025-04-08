@@ -52,7 +52,7 @@ struct boxScoreView: View {
                 .padding()
             
             Group {
-                ForEach(boxScores, id: \.self)
+                ForEach(boxScores)
                 {oldGame in
                     IndividualBoxScoreView(
                         game: savedToBsD(oldScoreBox: oldGame),

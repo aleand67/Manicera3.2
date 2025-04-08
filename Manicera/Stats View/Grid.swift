@@ -214,7 +214,7 @@ struct grid: View {
 struct gridRows: View {
     @Query(sort: \PlayerStats.name) var stats: [PlayerStats]
     var body: some View {
-        ForEach(stats, id: \.id) { player in
+        ForEach(stats) { player in
             Group{
                 nameCell(player: player) //Player name with contextual menu with chart and delete option
                 Text("\(player.wins)" + " - " + "\(player.losses)")
