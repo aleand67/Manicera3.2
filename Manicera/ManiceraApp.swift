@@ -11,8 +11,8 @@ import SwiftData
 @main
 struct ManiceraApp: App {
 
-    @ObservedObject var turns = TurnsModel()
-    @ObservedObject var currentBoxScore = CurrentBoxScore()
+    let turns = TurnsModel()
+    let currentBoxScore = CurrentBoxScore()
     
     var body: some Scene {
         WindowGroup{
@@ -23,5 +23,7 @@ struct ManiceraApp: App {
                     UIApplication.shared.isIdleTimerDisabled = true}
         }
         .modelContainer(for: [BoxScore.self, PlayerStats.self])
+        .environment(turns)
+        .environment(currentBoxScore)
     }
 }

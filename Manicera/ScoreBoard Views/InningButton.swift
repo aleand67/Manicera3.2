@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InningButton: View {
     
-    @EnvironmentObject var turns: TurnsModel
+    @Environment(TurnsModel.self) var turns
     @State var bigButtonSize: CGFloat
     @GestureState private var inningIsPressed = false
     @Binding var newGameFlash: Bool

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct OrangeButton: View {
     
-    @EnvironmentObject var turns: TurnsModel
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
+    @Environment(TurnsModel.self) var turns
+    @Environment(CurrentBoxScore.self) var currentBoxScore
     
     @State var bigButtonSize: CGFloat
     

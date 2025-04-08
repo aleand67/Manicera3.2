@@ -20,8 +20,8 @@ struct ArchiveDialogView: View {
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    @EnvironmentObject var turns: TurnsModel
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
+    @Environment(TurnsModel.self) var turns
+    @Environment(CurrentBoxScore.self) var currentBoxScore
     
     @State private var showingConfirmation = false
     @State private var textFieldsShown = false

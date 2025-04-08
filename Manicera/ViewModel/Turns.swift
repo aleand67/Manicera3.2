@@ -11,10 +11,10 @@ enum playerId: Codable {
     case orange, white
 }
 
+@Observable
 final class TurnsModel: ObservableObject {
     
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
-    @Published var run: Int
+    var run: Int
     var player: playerId?
     var orangeScore: Int
     var whiteScore: Int
