@@ -20,8 +20,8 @@ struct ArchiveDialogView: View {
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    @EnvironmentObject var turns: TurnsModel
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
+    @Environment(TurnsModel.self) var turns
+    @Environment(CurrentBoxScore.self) var currentBoxScore
     
     @State private var showingConfirmation = false
     @State private var textFieldsShown = false
@@ -334,8 +334,12 @@ struct ArchiveDialogView: View {
 }
 
 #Preview {
-    @Previewable @State var archiveDialog: Bool = true
-    @Previewable @State var newGameFlash: Bool = false
+    @State @Previewable var newGameFlash: Bool = false
+    @State @Previewable var archiveDialog: Bool = true
+    let turns = TurnsModel()
+    let currentBoxScore = CurrentBoxScore()
     ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
         .modelContainer(statsPreviewContainer)
+        .environment(turns)
+        .environment(currentBoxScore)
 }

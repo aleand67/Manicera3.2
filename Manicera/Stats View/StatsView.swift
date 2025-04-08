@@ -42,6 +42,6 @@ struct statsView: View {
 
 
 #Preview {
-    statsView(statsOnBoarding: true)
+    statsView(statsOnBoarding: false)
         .modelContainer(statsPreviewContainer)
 }

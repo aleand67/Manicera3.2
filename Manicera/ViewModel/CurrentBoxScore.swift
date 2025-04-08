@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-@Observable
-final class CurrentBoxScore: ObservableObject, Identifiable {
+
+@Observable final class CurrentBoxScore {
     
     var id: UUID
     var firstColor: playerId?

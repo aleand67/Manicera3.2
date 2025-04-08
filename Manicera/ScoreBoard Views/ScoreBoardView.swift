@@ -10,8 +10,8 @@ import SwiftData
 
 struct scoreboardView: View {
     
-    @EnvironmentObject var turns: TurnsModel
-    @EnvironmentObject var currentBoxScore: CurrentBoxScore
+    @Environment(TurnsModel.self) var turns
+    @Environment(CurrentBoxScore.self) var currentBoxScore
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //needed to set size of draggable rectangle on top to change tabbed views depending on screen size
     
@@ -245,6 +245,6 @@ struct scoreboardView: View {
     let currentBoxScore = CurrentBoxScore()
 
     scoreboardView(archiveDialog: $archiveDialog, wasSwipingUsed: false, tabsAvailable: true)
-            .environmentObject(turns)
-            .environmentObject(currentBoxScore)
+        .environment(turns)
+        .environment(currentBoxScore)
 }

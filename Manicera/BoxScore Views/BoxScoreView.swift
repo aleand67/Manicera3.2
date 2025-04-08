@@ -209,7 +209,8 @@ struct IndividualBoxScoreView: View {
 }
 
 #Preview {
+    let currentBoxScore = CurrentBoxScore()
     boxScoreView(boxScoreOnBoarding: true)
         .modelContainer(boxScorePreviewContainer)
-        .environmentObject(CurrentBoxScore.example)
+        .environment(currentBoxScore)
 }
