@@ -339,7 +339,7 @@ struct ArchiveDialogView: View {
     let turns = TurnsModel()
     let currentBoxScore = CurrentBoxScore()
     ArchiveDialogView(newGameFlash: $newGameFlash, archiveDialog: $archiveDialog)
-        .modelContainer(statsPreviewContainer)
+        //.modelContainer(statsPreviewContainer)
         .environment(turns)
         .environment(currentBoxScore)
 }

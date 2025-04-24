@@ -44,6 +44,8 @@ struct ContentView: View {
         .ignoresSafeArea()
         .onChange(of: selectedTab) {
             wasSwipingUsed = true
+            
+            /* might need to change all this to Tab() */
         }
     }
 }

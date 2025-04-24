@@ -275,5 +275,5 @@ struct nameCell: View {
     @Previewable @State var sortOrder = SortDescriptor(\PlayerStats.wins)
     grid()
         .background(.black)
-        .modelContainer(statsPreviewContainer)
+        //.modelContainer(statsPreviewContainer)
 }

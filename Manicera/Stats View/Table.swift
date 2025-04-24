@@ -69,5 +69,5 @@ struct table: View {
 
 #Preview {
     table()
-        .modelContainer(statsPreviewContainer)
+        //.modelContainer(statsPreviewContainer)
 }
